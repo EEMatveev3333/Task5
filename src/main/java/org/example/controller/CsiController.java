@@ -1,8 +1,10 @@
 package org.example.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.networknt.schema.JsonSchema;
 import org.example.request.CreateCsiRequest;
 import org.example.response.CsiResponse;
+import org.example.services.interfaces.CsiServiceIntf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.persistence.NoResultException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
+
+import static org.example.utils.JsonUtil.validateAndParseJson;
 
 @RestController
 public class CsiController {

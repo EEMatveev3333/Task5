@@ -4,78 +4,84 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.example.utils.JsonUtil;
+
+//import static org.example.utils.JsonUtil.getJsonSchema;
 
 import java.util.Date;
 
+@Getter
+@Setter
 @ToString
 public class CreateCsiRequest {
     private static final com.networknt.schema.JsonSchema jsonSchema = JsonUtil.getJsonSchema(CreateCsiRequest.class);
+    //private static final com.networknt.schema.JsonSchema jsonSchema = getJsonSchema(CreateCsiRequest.class);
 
-    @Getter @Setter
     private Integer instanceId;
-    @Getter @Setter
+
     private String productType;
-    @Getter @Setter
+
     private String productCode;
-    @Getter @Setter
+
     private String registerType;
-    @Getter @Setter
+
     private String mdmCode;
-    @Getter @Setter
+
     private String contractNumber;
-    @Getter @Setter
+
     private Date contractDate;
-    @Getter @Setter
+
     private Integer priority;
-    @Getter @Setter
+
     private Double interestRatePenalty;
-    @Getter @Setter
+
     private Double minimalBalance;
-    @Getter @Setter
+
     private Double thresholdAmount;
-    @Getter @Setter
+
     private String accountingDetails;
-    @Getter @Setter
+
     private String rateType;
-    @Getter @Setter
+
     private Double taxPercentageRate;
-    @Getter @Setter
+
     private Double technicalOverdraftLimitAmount;
-    @Getter @Setter
+
     private Integer contractId;
-    @Getter @Setter
+
     private String isoCurrencyCode;
-    @Getter @Setter
+
     private String branchCode;
-    @Getter @Setter
+
     private Agreement[] instanceAgreement;
-    @Getter @Setter
+
     private AdditionalPropertiesVip additionalPropertiesVip;
 
     @NoArgsConstructor
     @ToString
+    @Getter @Setter
     public static class Agreement {
-        @Getter @Setter
+
         private Integer supplementaryAgreementId;
-        @Getter @Setter
+
         private String number;
     }
 
     @NoArgsConstructor
     @ToString
+    @Getter @Setter
     public static class AdditionalPropertiesVip {
-        @Getter @Setter
+
         private Data[] data;
     }
 
     @NoArgsConstructor
+    @Getter @Setter
     public static class Data {
-        @Getter
-        @Setter
         private String key;
-        @Getter @Setter
+
         private String value;
-        @Getter @Setter
+
         private String name;
     }
 

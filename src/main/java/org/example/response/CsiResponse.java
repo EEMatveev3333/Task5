@@ -9,25 +9,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 @ToString
+@Getter
+@Setter
 public class CsiResponse {
 
-    @Getter
-    @Setter
     private CsiData data = new CsiData();
-    @Getter
-    @Setter
+
     private String errorMsg;
 
     @ToString
+    @Getter
+    @Setter
     public class CsiData {
-        @Getter
-        @Setter
+
         private int instanceId;
-        @Getter
-        @Setter
+
         private List<Integer> registerId = new ArrayList<>();
-        @Getter
-        @Setter
+
         private List<Integer> supplementaryAgreementId = new ArrayList<>();
     }
 }

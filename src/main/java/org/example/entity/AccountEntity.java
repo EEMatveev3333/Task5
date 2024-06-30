@@ -10,7 +10,7 @@ import javax.persistence.*;
 @Data
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = { "id" })
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -29,4 +29,11 @@ public class AccountEntity {
     @Column(name = "account_number")
     private String accountNumber;
 
+    @Basic
+    @Column(name = "bussy")
+    private Boolean bussy;
 }
+
+//ALTER TABLE account
+//ADD FOREIGN KEY (account_pool_id) REFERENCES account_pool (id);
+//        --ON DELETE CASCADE;

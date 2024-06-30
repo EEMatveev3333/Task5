@@ -53,3 +53,9 @@ public class TppRefProductRegisterTypeEntity {
     private String accountType;
 
 }
+
+//ALTER TABLE tpp_ref_product_register_type
+//ADD FOREIGN KEY (product_class_code) REFERENCES tpp_ref_product_class (value);
+//
+//ALTER TABLE tpp_ref_product_register_type
+//ADD FOREIGN KEY (account_type) REFERENCES tpp_ref_account_type (value);

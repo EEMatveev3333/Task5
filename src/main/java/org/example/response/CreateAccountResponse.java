@@ -5,19 +5,20 @@ import lombok.Setter;
 import lombok.ToString;
 
 @ToString
+@Getter
+@Setter
 public class CreateAccountResponse {
 
-    @Getter
-    @Setter
+
     private CsiData data = new CsiData();
-    @Getter
-    @Setter
+
     private String errorMsg;
 
     @ToString
+    @Getter
+    @Setter
     public class CsiData {
-        @Getter
-        @Setter
+
         private String accountId;
     }
 }

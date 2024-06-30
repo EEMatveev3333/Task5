@@ -1,9 +1,14 @@
 package org.example.services.implementations;
 
 
+import org.example.entity.AgreementEntity;
 import org.example.entity.TppProductEntity;
 import org.example.entity.TppProductRegisterEntity;
 import org.example.entity.TppRefProductRegisterTypeEntity;
+import org.example.repository.AgreementRepo;
+import org.example.repository.TppProductRegisterRepo;
+import org.example.repository.TppProductRepo;
+import org.example.repository.TppRefProductRegisterTypeRepo;
 import org.example.request.CreateCsiRequest;
 import org.example.response.CsiResponse;
 import org.example.services.interfaces.AccountNumServiceIntf;
@@ -12,16 +17,19 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.NoResultException;
+import javax.transaction.Transactional;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class CsiService implements CsiServiceIntf {
 
-    private ProductRepo productRepo;
-    private ProductRegisterTypeRepo registerTypeRepo;
-    private ProductRegisterRepo registerRepo;
+    private TppProductRepo productRepo;
+    private TppRefProductRegisterTypeRepo registerTypeRepo;
+    private TppProductRegisterRepo registerRepo;
     private AccountNumServiceIntf accountNumService;
-    private AgreementsRepo agreementsRepo;
+    private AgreementRepo agreementsRepo;
 
     @Transactional
     public CsiResponse createCsi(CreateCsiRequest csiRequest){
@@ -66,15 +74,15 @@ public class CsiService implements CsiServiceIntf {
 
             // Проверяем что нет совпадений по номерам доп.соглашений
             for (CreateCsiRequest.Agreement agreement: csiRequest.getInstanceAgreement()) {
-                Iterator<AgreementsEntity> agreements = productEntity.getAgreements();
+                Iterator<AgreementEntity> agreements = productEntity.getAgreements();
                 while (agreements.hasNext()) {
-                    AgreementsEntity agreementEntity = agreements.next();
+                    AgreementEntity agreementEntity = agreements.next();
                     if (agreementEntity.getNumber().equals(agreement.getNumber())) {
                         throw new IllegalArgumentException(" Параметр Number \"№ Дополнительного соглашения (сделки)\" = \""+agreement.getNumber()+"\" уже существует для ЭП с ИД "+productId);
                     }
                 }
                 // Добавляем новое доп.соглашение
-                AgreementsEntity agreementsEntity = new AgreementsEntity(agreement.getNumber());
+                AgreementEntity agreementsEntity = new AgreementEntity(agreement.getNumber());
                 productEntity.addAgreement(agreementsEntity);
                 agreementsRepo.save(agreementsEntity);
                 // Созданные доп.соглашения добавляем в ответ
@@ -91,15 +99,15 @@ public class CsiService implements CsiServiceIntf {
         return csiResponse;
     }
     @Autowired
-    public void setProductRepo(ProductRepo productRepo) {
+    public void setProductRepo(TppProductRepo productRepo) {
         this.productRepo = productRepo;
     }
     @Autowired
-    public void setRegisterTypeRepo(ProductRegisterTypeRepo registerTypeRepo) {
+    public void setRegisterTypeRepo(TppRefProductRegisterTypeRepo registerTypeRepo) {
         this.registerTypeRepo = registerTypeRepo;
     }
     @Autowired
-    public void setRegistryTypeRepo(ProductRegisterRepo registerRepo) {
+    public void setRegistryTypeRepo(TppProductRegisterRepo registerRepo) {
         this.registerRepo = registerRepo;
     }
     @Autowired
@@ -107,7 +115,7 @@ public class CsiService implements CsiServiceIntf {
         this.accountNumService = accountNumService;
     }
     @Autowired
-    public void setAgreementsRepo(AgreementsRepo agreementsRepo) {
+    public void setAgreementsRepo(AgreementRepo agreementsRepo) {
         this.agreementsRepo = agreementsRepo;
     }
 

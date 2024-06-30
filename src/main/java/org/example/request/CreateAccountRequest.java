@@ -3,6 +3,8 @@ package org.example.request;
 import lombok.Getter;
 import lombok.Setter;
 
+import org.example.utils.JsonUtil;
+
 @Getter
 @Setter
 public class CreateAccountRequest {

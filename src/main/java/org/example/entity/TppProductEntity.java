@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import javax.persistence.*;
 
 @Table(name = "tpp_product", schema = "public", catalog = "postgres")
@@ -16,7 +18,7 @@ import javax.persistence.*;
 @Data
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = { "id" })
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -94,5 +96,17 @@ public class TppProductEntity {
     @Basic
     @Column(name = "state")
     private String state;
+
+//    @OneToMany(mappedBy = "agreementId")
+//    private List<AgreementEntity> agreements = new ArrayList<>();
+
+//    public void addAgreement(AgreementsEntity agreement){
+//        agreement.setAgreementId(this);
+//        agreements.add(agreement);
+//    }
+//
+//    public Iterator<AgreementsEntity> getAgreements() {
+//        return agreements.iterator();
+//    }
 
 }

@@ -14,7 +14,7 @@ import javax.persistence.*;
 @Data
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = { "id" })
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
@@ -51,3 +51,6 @@ public class TppProductRegisterEntity {
     private String accountNumber;
 
 }
+
+//ALTER TABLE tpp_product_register
+//ADD FOREIGN KEY (type) REFERENCES tpp_ref_product_register_type (value);

@@ -4,6 +4,9 @@ package org.example.services.implementations;
 import org.example.entity.TppProductEntity;
 import org.example.entity.TppProductRegisterEntity;
 import org.example.entity.TppRefProductRegisterTypeEntity;
+import org.example.repository.TppProductRegisterRepo;
+import org.example.repository.TppProductRepo;
+import org.example.repository.TppRefProductRegisterTypeRepo;
 import org.example.request.CreateAccountRequest;
 import org.example.response.CreateAccountResponse;
 import org.example.services.interfaces.AccountNumServiceIntf;
@@ -12,14 +15,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.NoResultException;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
 public class CreateAccountService implements CreateAccountServiceIntf {
 
-    private ProductRegisterRepo registerRepo;
-    private ProductRepo productRepo;
-    private ProductRegisterTypeRepo registerTypeRepo;
+    private TppProductRegisterRepo registerRepo;
+    private TppProductRepo productRepo;
+    private TppRefProductRegisterTypeRepo registerTypeRepo;
     private AccountNumServiceIntf accountNumService;
 
 
@@ -65,15 +69,15 @@ public class CreateAccountService implements CreateAccountServiceIntf {
     }
 
     @Autowired
-    public void setRegistryTypeRepo(ProductRegisterRepo registerRepo) {
+    public void setRegistryTypeRepo(TppProductRegisterRepo registerRepo) {
         this.registerRepo = registerRepo;
     }
     @Autowired
-    public void setProductRepo(ProductRepo productRepo) {
+    public void setProductRepo(TppProductRepo productRepo) {
         this.productRepo = productRepo;
     }
     @Autowired
-    public void setRegisterTypeRepo(ProductRegisterTypeRepo registerTypeRepo) {
+    public void setRegisterTypeRepo(TppRefProductRegisterTypeRepo registerTypeRepo) {
         this.registerTypeRepo = registerTypeRepo;
     }
     @Autowired

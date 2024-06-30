@@ -16,7 +16,7 @@ import javax.persistence.*;
 @Data
 @Getter
 @Setter
-@EqualsAndHashCode
+@EqualsAndHashCode(exclude = { "id" })
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString

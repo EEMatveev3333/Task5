@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import javax.persistence.*;
 
@@ -97,16 +98,16 @@ public class TppProductEntity {
     @Column(name = "state")
     private String state;
 
-//    @OneToMany(mappedBy = "agreementId")
-//    private List<AgreementEntity> agreements = new ArrayList<>();
+    @OneToMany(mappedBy = "agreementId")
+    private List<AgreementEntity> agreements = new ArrayList<>();
 
-//    public void addAgreement(AgreementsEntity agreement){
-//        agreement.setAgreementId(this);
-//        agreements.add(agreement);
-//    }
-//
-//    public Iterator<AgreementsEntity> getAgreements() {
-//        return agreements.iterator();
-//    }
+    public void addAgreement(AgreementEntity agreement){
+        agreement.setAgreementId(this);
+        agreements.add(agreement);
+    }
+
+    public Iterator<AgreementEntity> getAgreements() {
+        return agreements.iterator();
+    }
 
 }

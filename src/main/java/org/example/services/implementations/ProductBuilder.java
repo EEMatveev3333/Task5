@@ -1,15 +1,18 @@
 package org.example.services.implementations;
 
 import org.example.entity.TppProductEntity;
+import org.example.repository.TppProductRepo;
 import org.example.request.CreateCsiRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.math.BigDecimal;
+import java.util.Date;
 
 @Component
 public class ProductBuilder {
-    private static ProductClassRepo productClassRepo;
+    //private static ProductClassRepo productClassRepo;
+    private static TppProductRepo productClassRepo;
     private static ClientRepo clientRepo;
     //private static BranchRepo branchRepo;
     public static TppProductEntity createProductEntity(CreateCsiRequest csiRequest) {
@@ -27,8 +30,8 @@ public class ProductBuilder {
         pe.setInterestRateType(csiRequest.getRateType());
         pe.setTaxRate(BigDecimal.valueOf(csiRequest.getTaxPercentageRate()));
         pe.setState("OPEN");
-        //pe.setCurrency(csiRequest.getIsoCurrencyCode());
-        //pe.setBranch(branchRepo.getByCode(csiRequest.getBranchCode()));
+//        pe.setCurrency(csiRequest.getIsoCurrencyCode());
+//        pe.setBranch(branchRepo.getByCode(csiRequest.getBranchCode()));
         return pe;
     }
 

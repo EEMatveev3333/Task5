@@ -8,7 +8,7 @@ import org.example.services.interfaces.AccountNumServiceIntf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.NoResultException;
+import jakarta.persistence.NoResultException;
 import java.util.List;
 
 @Service

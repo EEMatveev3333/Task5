@@ -1,7 +1,9 @@
 package org.example.services.implementations;
 
 import org.example.entity.TppProductEntity;
+import org.example.enums.ProductType;
 import org.example.repository.TppProductRepo;
+import org.example.repository.TppRefProductClassRepo;
 import org.example.request.CreateCsiRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -12,13 +14,13 @@ import java.util.Date;
 @Component
 public class ProductBuilder {
     //private static ProductClassRepo productClassRepo;
-    private static TppProductRepo productClassRepo;
-    private static ClientRepo clientRepo;
+    private static TppRefProductClassRepo productClassRepo;
+    //private static ClientRepo clientRepo;
     //private static BranchRepo branchRepo;
     public static TppProductEntity createProductEntity(CreateCsiRequest csiRequest) {
         TppProductEntity pe = new TppProductEntity();
         pe.setProductCodeId(productClassRepo.getByValue(csiRequest.getProductCode()));
-        pe.setClientId(clientRepo.getByMdmCode(csiRequest.getMdmCode()));
+       // pe.setClientId(clientRepo.getByMdmCode(csiRequest.getMdmCode()));
         pe.setType(ProductType.valueOf(csiRequest.getProductType()));
         pe.setNumber(csiRequest.getContractNumber());
         pe.setPriority(csiRequest.getPriority());
@@ -36,16 +38,17 @@ public class ProductBuilder {
     }
 
     @Autowired
-    public void setRegistryTypeRepo(ProductClassRepo productClassRepo) {
+    //public void setRegistryTypeRepo(ProductClassRepo productClassRepo) {
+    public void setRegistryTypeRepo(TppRefProductClassRepo productClassRepo) {
         ProductBuilder.productClassRepo = productClassRepo;
     }
-    @Autowired
+/*    @Autowired
     public void setClientRepo(ClientRepo clientRepo) {
         ProductBuilder.clientRepo = clientRepo;
     }
     @Autowired
     public void setBranchRepo(BranchRepo branchRepo) {
         ProductBuilder.branchRepo = branchRepo;
-    }
+    }*/
 
 }

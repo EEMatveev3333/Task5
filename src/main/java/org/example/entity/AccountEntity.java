@@ -1,9 +1,10 @@
 package org.example.entity;
 
 
+import jakarta.persistence.*;
 import lombok.*;
 
-import javax.persistence.*;
+//import javax.persistence.*;
 
 @Table(name = "account", schema = "public", catalog = "postgres")
 @Entity
@@ -19,7 +20,7 @@ public class AccountEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Basic
     @Column(name = "account_pool_id")

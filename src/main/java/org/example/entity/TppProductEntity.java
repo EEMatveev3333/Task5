@@ -3,16 +3,18 @@ package org.example.entity;
 
 import lombok.*;
 
-import javax.persistence.Basic;
+/*import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+import javax.persistence.GenerationType;*/
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
-import javax.persistence.*;
+import jakarta.persistence.*;
+import org.example.enums.ProductType;
 
 @Table(name = "tpp_product", schema = "public", catalog = "postgres")
 @Entity
@@ -28,11 +30,15 @@ public class TppProductEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
-    @Basic
+/*    @Basic
     @Column(name = "product_code_id")
-    private Long productCodeId;
+    private Long productCodeId;*/
+
+    @Getter @Setter
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "product_code_id", referencedColumnName = "id")
+    private TppRefProductClassEntity productCodeId;
 
     @Basic
     @Column(name = "client_id")
@@ -40,7 +46,7 @@ public class TppProductEntity {
 
     @Basic
     @Column(name = "type")
-    private String type;
+    private ProductType type;
 
     @Basic
     @Column(name = "number")
@@ -48,19 +54,19 @@ public class TppProductEntity {
 
     @Basic
     @Column(name = "priority")
-    private Long priority;
+    private Integer priority;
 
     @Basic
     @Column(name = "date_of_conclusion")
-    private Timestamp dateOfConclusion;
+    private Date dateOfConclusion;
 
     @Basic
     @Column(name = "start_date_time")
-    private Timestamp startDateTime;
+    private Date startDateTime;
 
     @Basic
     @Column(name = "end_date_time")
-    private Timestamp endDateTime;
+    private Date endDateTime;
 
     @Basic
     @Column(name = "days")
@@ -102,7 +108,8 @@ public class TppProductEntity {
     private List<AgreementEntity> agreements = new ArrayList<>();
 
     public void addAgreement(AgreementEntity agreement){
-        agreement.setAgreementId(this);
+        //agreement.setAgreementId(this);
+        //agreement.setGeneralAgreementId(this);
         agreements.add(agreement);
     }
 

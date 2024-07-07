@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TppRefProductClassRepo extends JpaRepository<TppRefProductClassEntity, Integer> {
+    TppRefProductClassEntity getByValue(String productCode);
 }

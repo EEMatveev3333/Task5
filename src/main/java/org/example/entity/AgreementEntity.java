@@ -3,13 +3,15 @@ package org.example.entity;
 
 import lombok.*;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
+//import javax.persistence.Basic;
+//import javax.persistence.Column;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
-import javax.persistence.*;
+import java.util.Date;
+
+import jakarta.persistence.*;
 
 @Table(name = "agreement", schema = "public", catalog = "postgres")
 @Entity
@@ -25,7 +27,7 @@ public class AgreementEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Basic
     @Column(name = "product_id")
@@ -53,15 +55,15 @@ public class AgreementEntity {
 
     @Basic
     @Column(name = "opening_date")
-    private Timestamp openingDate;
+    private Date openingDate;
 
     @Basic
     @Column(name = "closing_date")
-    private Timestamp closingDate;
+    private Date closingDate;
 
     @Basic
     @Column(name = "cancel_date")
-    private Timestamp cancelDate;
+    private Date cancelDate;
 
     @Basic
     @Column(name = "validity_duration")
@@ -77,7 +79,7 @@ public class AgreementEntity {
 
     @Basic
     @Column(name = "interest_calculation_date")
-    private Timestamp interestCalculationDate;
+    private Date interestCalculationDate;
 
     @Basic
     @Column(name = "interest_rate")
@@ -115,4 +117,7 @@ public class AgreementEntity {
     @Column(name = "maximal_interest_rate_coefficient_action")
     private String maximalInterestRateCoefficientAction;
 
+    public AgreementEntity(String number) {
+        this.number = number;
+    }
 }

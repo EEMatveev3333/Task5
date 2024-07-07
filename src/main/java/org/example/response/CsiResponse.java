@@ -22,7 +22,7 @@ public class CsiResponse {
     @Setter
     public class CsiData {
 
-        private int instanceId;
+        private Integer instanceId;
 
         private List<Integer> registerId = new ArrayList<>();
 

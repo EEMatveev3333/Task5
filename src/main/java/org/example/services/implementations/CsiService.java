@@ -16,8 +16,8 @@ import org.example.services.interfaces.CsiServiceIntf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.NoResultException;
-import javax.transaction.Transactional;
+import jakarta.persistence.NoResultException;
+import jakarta.transaction.Transactional;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;

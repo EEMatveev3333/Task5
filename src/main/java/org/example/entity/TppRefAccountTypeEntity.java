@@ -3,11 +3,11 @@ package org.example.entity;
 
 import lombok.*;
 
-import javax.persistence.Basic;
+/*import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.*;
+import javax.persistence.GenerationType;*/
+import jakarta.persistence.*;
 
 @Table(name = "tpp_ref_account_type", schema = "public", catalog = "postgres")
 @Entity
@@ -23,7 +23,7 @@ public class TppRefAccountTypeEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "internal_id")
-    private int internalId;
+    private Integer internalId;
 
     @Basic
     @Column(name = "value")

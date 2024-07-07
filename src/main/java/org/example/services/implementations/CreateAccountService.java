@@ -14,8 +14,8 @@ import org.example.services.interfaces.CreateAccountServiceIntf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.NoResultException;
-import javax.transaction.Transactional;
+import jakarta.persistence.NoResultException;
+import jakarta.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -64,7 +64,7 @@ public class CreateAccountService implements CreateAccountServiceIntf {
 
         registerRepo.save(accountEntity);
 
-        accountResponse.getData().setAccountId (accountEntity.getId().toString());
+        accountResponse.getData().setAccountId(accountEntity.getId().toString());
         return accountResponse;
     }
 

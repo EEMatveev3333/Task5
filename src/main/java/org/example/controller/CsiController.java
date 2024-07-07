@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.persistence.NoResultException;
+import jakarta.persistence.NoResultException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 

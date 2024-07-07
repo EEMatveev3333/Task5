@@ -3,11 +3,11 @@ package org.example.entity;
 
 import lombok.*;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.*;
+//import javax.persistence.Basic;
+//import javax.persistence.Column;
+//import javax.persistence.GeneratedValue;
+//import javax.persistence.GenerationType;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 

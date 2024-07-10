@@ -48,9 +48,19 @@ public class AccountPoolEntity {
     @Column(name = "register_type_code")
     private String registerTypeCode;
 
-    @ElementCollection @Getter @Setter
-    @CollectionTable(name = "account", joinColumns = @JoinColumn(name = "account_coll"))
-    @Column(name = "account")
-    private List<String> accounts = new ArrayList<>();
+//    @ElementCollection @Getter @Setter
+//    @CollectionTable(name = "account", joinColumns = @JoinColumn(name = "account_coll"))
+//    @Column(name = "account")
+//    private List<String> accounts = new ArrayList<>();
 
 }
+/*
+CREATE TABLE IF NOT EXISTS account_pool(
+        id serial PRIMARY KEY,
+        branch_code VARCHAR(50),
+currency_code VARCHAR(30),
+mdm_code VARCHAR(50),
+priority_code VARCHAR(30),
+registry_type_code VARCHAR(50)
+);
+*/

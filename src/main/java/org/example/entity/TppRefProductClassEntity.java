@@ -55,3 +55,18 @@ public class TppRefProductClassEntity {
     private String subclassName;
 
 }
+
+
+/*
+CREATE TABLE IF NOT EXISTS tpp_ref_product_class
+        (
+                internal_id serial PRIMARY KEY ,
+                value VARCHAR(100) UNIQUE NOT NULL,
+gbi_code VARCHAR(50),
+gbi_name VARCHAR(100),
+product_row_code VARCHAR(50),
+product_row_name VARCHAR(100),
+subclass_code VARCHAR(50),
+subclass_name VARCHAR(100)
+);
+*/

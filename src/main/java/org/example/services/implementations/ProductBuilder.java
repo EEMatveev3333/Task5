@@ -19,7 +19,7 @@ public class ProductBuilder {
     //private static BranchRepo branchRepo;
     public static TppProductEntity createProductEntity(CreateCsiRequest csiRequest) {
         TppProductEntity pe = new TppProductEntity();
-        pe.setProductCodeId(productClassRepo.getByValue(csiRequest.getProductCode()));
+        //pe.setProductCodeId(productClassRepo.getByValue(csiRequest.getProductCode()));
        // pe.setClientId(clientRepo.getByMdmCode(csiRequest.getMdmCode()));
         pe.setType(ProductType.valueOf(csiRequest.getProductType()));
         pe.setNumber(csiRequest.getContractNumber());

@@ -30,3 +30,10 @@ public class TppRefAccountTypeEntity {
     private String value;
 
 }
+
+/*
+CREATE TABLE IF NOT EXISTS tpp_ref_account_type
+        (
+                internal_id serial PRIMARY KEY ,
+                value VARCHAR(100) UNIQUE NOT NULL
+);*/

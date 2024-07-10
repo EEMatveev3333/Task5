@@ -32,13 +32,9 @@ public class TppProductEntity {
     @Column(name = "id")
     private Integer id;
 
-/*    @Basic
+    @Basic
     @Column(name = "product_code_id")
-    private Long productCodeId;*/
-
-    @Getter @Setter
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "product_code_id", referencedColumnName = "id")
-    private TppRefProductClassEntity productCodeId;
+    private Long productCodeId;
 
     @Basic
     @Column(name = "client_id")
@@ -118,3 +114,28 @@ public class TppProductEntity {
     }
 
 }
+
+/*
+
+CREATE TABLE IF NOT EXISTS tpp_product
+        (
+                id serial PRIMARY KEY,
+--	agreement_id BIGINT,
+                product_code_id BIGINT,
+                client_id BIGINT,
+                type VARCHAR(50),
+number VARCHAR(50),
+priority BIGINT,
+date_of_conclusion TIMESTAMP,
+start_date_time TIMESTAMP,
+end_date_time TIMESTAMP,
+days BIGINT,
+penalty_rate DECIMAL,
+nso DECIMAL,
+threshold_amount DECIMAL,
+requisite_type VARCHAR(50),
+interest_rate_type VARCHAR(50),
+tax_rate DECIMAL,
+reasone_close VARCHAR(100),
+state VARCHAR(50)
+);*/

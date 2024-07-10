@@ -27,10 +27,13 @@ public class TppProductRegisterEntity {
     @Column(name = "id")
     private Integer id;
 
+    //    НЕ ПО СХЕМЕ!!!
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "product_id", referencedColumnName = "id")
     private TppProductEntity productId;
+    //    НЕ ПО СХЕМЕ!!!
 
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "register_type", referencedColumnName = "id")
+
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "type", referencedColumnName = "internal_id")
     private TppRefProductRegisterTypeEntity registerType;
 
 //    @Basic
@@ -69,5 +72,17 @@ public class TppProductRegisterEntity {
     }
 }
 
-//ALTER TABLE tpp_product_register
-//ADD FOREIGN KEY (type) REFERENCES tpp_ref_product_register_type (value);
+/*CREATE TABLE IF NOT EXISTS tpp_product_register
+        (
+                id serial PRIMARY KEY ,
+                product_id BIGINT,
+                type VARCHAR(100) NOT NULL,
+account BIGINT,
+currency_code VARCHAR(30),
+state VARCHAR(50),
+account_number VARCHAR(25)
+);
+
+ALTER TABLE tpp_product_register
+ADD FOREIGN KEY (type) REFERENCES tpp_ref_product_register_type (value);*/
+

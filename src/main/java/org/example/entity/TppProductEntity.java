@@ -32,9 +32,14 @@ public class TppProductEntity {
     @Column(name = "id")
     private Integer id;
 
-    @Basic
+/*    @Basic
     @Column(name = "product_code_id")
-    private Long productCodeId;
+    private Long productCodeId;*/
+
+    @Getter @Setter
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "product_code_id", referencedColumnName = "internal_id")
+    private TppRefProductClassEntity productCodeId;
+
 
     @Basic
     @Column(name = "client_id")

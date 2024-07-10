@@ -1,5 +1,8 @@
 package org.example.entity;
-
+//    НЕ ПО СХЕМЕ!!!
+//@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "product_class_code", referencedColumnName = "internal_id")
+//private TppRefProductClassEntity productClassCode;
+//    НЕ ПО СХЕМЕ!!!
 
 import lombok.*;
 
@@ -40,10 +43,7 @@ public class TppRefProductRegisterTypeEntity {
     @Basic
     @Column(name = "product_class_code")
     private String productClassCode;
-//    НЕ ПО СХЕМЕ!!!
-    //@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "product_class_code", referencedColumnName = "internal_id")
-    //private TppRefProductClassEntity productClassCode;
-    //    НЕ ПО СХЕМЕ!!!
+
     @Basic
     @Column(name = "register_type_start_date")
     private Date registerTypeStartDate;

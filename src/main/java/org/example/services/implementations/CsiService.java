@@ -1,14 +1,8 @@
 package org.example.services.implementations;
 
 
-import org.example.entity.AgreementEntity;
-import org.example.entity.TppProductEntity;
-import org.example.entity.TppProductRegisterEntity;
-import org.example.entity.TppRefProductRegisterTypeEntity;
-import org.example.repository.AgreementRepo;
-import org.example.repository.TppProductRegisterRepo;
-import org.example.repository.TppProductRepo;
-import org.example.repository.TppRefProductRegisterTypeRepo;
+import org.example.entity.*;
+import org.example.repository.*;
 import org.example.request.CreateCsiRequest;
 import org.example.response.CsiResponse;
 import org.example.services.interfaces.AccountNumServiceIntf;
@@ -31,16 +25,25 @@ public class CsiService implements CsiServiceIntf {
     private AccountNumServiceIntf accountNumService;
     private AgreementRepo agreementsRepo;
 
+    //---
+    @Autowired
+    private TppRefAccountTypeRepo accountTypeRepo;
+
     @Transactional
     public CsiResponse createCsi(CreateCsiRequest csiRequest){
         CsiResponse csiResponse = new CsiResponse();
         TppProductEntity productEntity;
         Integer productId = csiRequest.getInstanceId();
 
+
         if (productId == null) {
 
+            //---
+            //TppRefAccountTypeEntity productClassCode = accountTypeRepo.getByValue(csiRequest.getProductCode());
             // Проверяем корректность переданного значения в поле ProductCode
-            List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByProductClassCodeAndAccountType(csiRequest.getProductCode(), "Клиентский");
+            //---
+            List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByProductClassCodeAndAccountType(csiRequest.getProductCode(), accountTypeRepo.getByValue( "Клиентский"));
+            //List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByProductClassCodeAndAccountType(productClassCode, "Клиентский");
             if (registerTypes.isEmpty()) {
                 throw new NoResultException("КодПродукта =\""+csiRequest.getProductCode()+"\" не найден в Каталоге продуктов (tpp_ref_product_register_type)");
             }
@@ -102,18 +105,22 @@ public class CsiService implements CsiServiceIntf {
     public void setProductRepo(TppProductRepo productRepo) {
         this.productRepo = productRepo;
     }
+
     @Autowired
     public void setRegisterTypeRepo(TppRefProductRegisterTypeRepo registerTypeRepo) {
         this.registerTypeRepo = registerTypeRepo;
     }
+
     @Autowired
     public void setRegistryTypeRepo(TppProductRegisterRepo registerRepo) {
         this.registerRepo = registerRepo;
     }
+
     @Autowired
     public void setAccountNumService(AccountNumServiceIntf accountNumService) {
         this.accountNumService = accountNumService;
     }
+
     @Autowired
     public void setAgreementsRepo(AgreementRepo agreementsRepo) {
         this.agreementsRepo = agreementsRepo;

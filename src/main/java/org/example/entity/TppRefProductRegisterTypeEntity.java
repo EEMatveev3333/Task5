@@ -37,12 +37,12 @@ public class TppRefProductRegisterTypeEntity {
     @Column(name = "register_type_name")
     private String registerTypeName;
 
-//    @Basic
-//    @Column(name = "product_class_code")
-//    private String productClassCode;
+    @Basic
+    @Column(name = "product_class_code")
+    private String productClassCode;
 //    НЕ ПО СХЕМЕ!!!
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "product_class_code", referencedColumnName = "internal_id")
-    private TppRefProductClassEntity productId;
+    //@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "product_class_code", referencedColumnName = "internal_id")
+    //private TppRefProductClassEntity productClassCode;
     //    НЕ ПО СХЕМЕ!!!
     @Basic
     @Column(name = "register_type_start_date")

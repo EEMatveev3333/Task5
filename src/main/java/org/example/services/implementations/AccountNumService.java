@@ -24,7 +24,10 @@ public class AccountNumService implements AccountNumServiceIntf {
                 registerType.getValue()
         );
 
-        if (accountPool.getAccounts().isEmpty()) {
+        String retAccountNum = new String();
+/*  ВЕРНУТЬ НА МЕСТО!!!
+
+if (accountPool.getAccounts().isEmpty()) {
             throw new NoResultException("В пуле счетов закончились счета");
         }
 
@@ -33,6 +36,8 @@ public class AccountNumService implements AccountNumServiceIntf {
 
         // Удаляем счёт из пула
         accounts.remove(0);
+        */
+
 
         return retAccountNum;
     }

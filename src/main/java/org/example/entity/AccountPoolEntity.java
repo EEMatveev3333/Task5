@@ -48,10 +48,11 @@ public class AccountPoolEntity {
     @Column(name = "register_type_code")
     private String registerTypeCode;
 
-//    @ElementCollection @Getter @Setter
-//    @CollectionTable(name = "account", joinColumns = @JoinColumn(name = "account_coll"))
-//    @Column(name = "account")
-//    private List<String> accounts = new ArrayList<>();
+/*    //!!!Перепроверить
+    @ElementCollection @Getter @Setter
+    @CollectionTable(name = "account", joinColumns = @JoinColumn(name = "account_coll"))
+    @Column(name = "account")
+    private List<String> accounts = new ArrayList<>();*/
 
 }
 /*

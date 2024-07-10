@@ -105,11 +105,11 @@ public class TppProductEntity {
     @Column(name = "state")
     private String state;
 
-    @OneToMany(mappedBy = "agreementId")
+    @OneToMany(mappedBy = "productId")
     private List<AgreementEntity> agreements = new ArrayList<>();
 
     public void addAgreement(AgreementEntity agreement){
-        //agreement.setAgreementId(this);
+        agreement.setProductId(this); //setAgreementId(this);
         //agreement.setGeneralAgreementId(this);
         agreements.add(agreement);
     }

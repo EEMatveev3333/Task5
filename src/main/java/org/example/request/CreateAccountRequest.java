@@ -42,6 +42,7 @@ public class CreateAccountRequest {
 
     // Код точки продаж
     private String salesCode;
+
     public static com.networknt.schema.JsonSchema getJsonSchema() { return  jsonSchema; }
 }
 

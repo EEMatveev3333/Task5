@@ -55,8 +55,10 @@ public class TppRefProductRegisterTypeEntity {
 //    @Basic
 //    @Column(name = "account_type")
 //    private String accountType;
-@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "account_type", referencedColumnName = "internal_id")
-private TppRefAccountTypeEntity accountType;
+//@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "account_type", referencedColumnName = "internal_id")
+@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "account_type", referencedColumnName = "value")
+//private TppRefAccountTypeEntity accountType;
+private String accountType;
 
 }
 /*

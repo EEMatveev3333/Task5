@@ -28,15 +28,18 @@ public class TppProductRegisterEntity {
     private Integer id;
 
     //    НЕ ПО СХЕМЕ!!!
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "product_id", referencedColumnName = "id")
+    //@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "product_id", referencedColumnName = "id")
     //private TppProductEntity productId;
-    private Long productId;
+    //@Basic
+    //@Column(name = "product_id")
+    //private Long productId;
     //    НЕ ПО СХЕМЕ!!!
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "product_id", referencedColumnName = "id")
+    private TppProductEntity productId;
 
-
-    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "type", referencedColumnName = "internal_id")
-    //private TppRefProductRegisterTypeEntity registerType;
-    private String registerType;
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "type", referencedColumnName = "value")
+    private TppRefProductRegisterTypeEntity registerType;
+    //private String registerType;
 
 //    @Basic
 //    @Column(name = "product_id")
@@ -65,8 +68,8 @@ public class TppProductRegisterEntity {
     @Column(name = "account_number")
     private String accountNum;
 
-//    public TppProductRegisterEntity(TppProductEntity productId, TppRefProductRegisterTypeEntity registerType, String accountNum, String currency) {
-public TppProductRegisterEntity(Long productId, String registerType, String accountNum, String currency) {
+    public TppProductRegisterEntity(TppProductEntity productId, TppRefProductRegisterTypeEntity registerType, String accountNum, String currency) {
+//public TppProductRegisterEntity(Long productId, String registerType, String accountNum, String currency) {
         this.productId = productId;
         this.registerType = registerType;
         this.accountNum = accountNum;

@@ -34,8 +34,8 @@ public class AgreementEntity {
 //    private Integer productId;
     @Getter @Setter
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private Integer productId;
-//    private TppProductEntity productId;
+//    private Integer productId;
+    private TppProductEntity productId;
 
     @Basic
     @Column(name = "general_agreement_id")

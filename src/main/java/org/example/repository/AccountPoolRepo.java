@@ -26,9 +26,10 @@ public interface AccountPoolRepo  extends JpaRepository<AccountPoolEntity, Integ
 //    List<TppRefProductRegisterTypeEntity> findByValueAndAccountType(@Param("value")String value,
 //                                                                    @Param("accountType") String accountType);
 
-    @Query("select AE.accountNumber  from AccountPoolEntity APE " +
-            " inner join AccountEntity AE  on APE.id = AE.accountPoolId " +
-            " where c.value=:AccountPoolEntity_ID ")
+//    @Query("select AE.accountNumber  from account_pool APE " +
+//            " inner join AccountEntity AE  on APE.id = AE.accountPoolId " +
+//            " where APE.id = :AccountPoolEntity_ID ")
+    @Query("select AE.account_number from account_pool APE inner join account AE  on APE.id = AE.account_pool_id where APE.id = :AccountPoolEntity_ID")
     List<String> getAccountsByAccountPoolEntityID(@Param("AccountPoolEntity_ID")Integer value);
 
 }

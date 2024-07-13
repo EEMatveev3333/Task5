@@ -14,7 +14,14 @@ import jakarta.persistence.*;
 import java.sql.Timestamp;
 import java.util.Date;
 
-@Table(name = "tpp_ref_product_register_type", schema = "public", catalog = "postgres")
+@Table(
+        name = "tpp_ref_product_register_type",
+        schema = "public",
+        catalog = "postgres",
+        uniqueConstraints = @UniqueConstraint(
+                                                columnNames = {"value"}
+                                                )
+    )
 @Entity
 @Data
 @Getter
@@ -40,9 +47,11 @@ public class TppRefProductRegisterTypeEntity {
     @Column(name = "register_type_name")
     private String registerTypeName;
 
-    @Basic
-    @Column(name = "product_class_code")
-    private String productClassCode;
+//    @Basic
+//    @Column(name = "product_class_code")
+//    private String productClassCode;
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "product_class_code", referencedColumnName = "value")
+    private TppRefProductClassEntity productClassCode;
 
     @Basic
     @Column(name = "register_type_start_date")
@@ -56,9 +65,9 @@ public class TppRefProductRegisterTypeEntity {
 //    @Column(name = "account_type")
 //    private String accountType;
 //@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "account_type", referencedColumnName = "internal_id")
-@ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "account_type", referencedColumnName = "value")
-//private TppRefAccountTypeEntity accountType;
-private String accountType;
+    @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "account_type", referencedColumnName = "value")
+    private TppRefAccountTypeEntity accountType;
+//private String accountType;
 
 }
 /*

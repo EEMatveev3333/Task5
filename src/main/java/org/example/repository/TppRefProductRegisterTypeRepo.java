@@ -1,6 +1,7 @@
 package org.example.repository;
 
 import org.example.entity.TppRefAccountTypeEntity;
+import org.example.entity.TppRefProductClassEntity;
 import org.example.entity.TppRefProductRegisterTypeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -13,16 +14,16 @@ public interface TppRefProductRegisterTypeRepo extends JpaRepository<TppRefProdu
 //    TppRefAccountTypeEntity
 //    List<TppRefProductRegisterTypeEntity> findAllByProductClassCodeAndAccountType(String productClassCode, String accountType);
     List<TppRefProductRegisterTypeEntity> findAllByProductClassCodeAndAccountType(
-            String productClassCode,
+            TppRefProductClassEntity productClassCode,
             TppRefAccountTypeEntity accountType
     );
 
     List<TppRefProductRegisterTypeEntity> findAllByProductClassCodeAndValue(
-            String productClassCode,
-            String registerTypeCode
+            TppRefProductClassEntity productClassCode,
+            String value
     );
 
     TppRefProductRegisterTypeEntity getByValue(
-            String typeCode
+            String value
     );
 }

@@ -27,7 +27,8 @@ public class AccountEntity {
 //    private Integer accountPoolId;
     @Getter @Setter
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "account_pool_id", referencedColumnName = "id")
-    private AccountPoolEntity accountPoolId;
+//    private AccountPoolEntity accountPoolId;
+    private Integer accountPoolId;
 
 
     @Basic

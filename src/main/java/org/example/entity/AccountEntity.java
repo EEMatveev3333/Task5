@@ -45,7 +45,7 @@ public class AccountEntity {
         id serial PRIMARY KEY,
         account_pool_id integer,
         account_number VARCHAR(25),
-bussy BOOLEAN
+        bussy BOOLEAN
 );
 
 ALTER TABLE account

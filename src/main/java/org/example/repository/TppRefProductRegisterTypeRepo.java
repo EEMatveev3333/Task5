@@ -12,9 +12,17 @@ public interface TppRefProductRegisterTypeRepo extends JpaRepository<TppRefProdu
 //    List<TppRefProductRegisterTypeEntity> findAllByProductClassCodeAndAccountType(String productClassCode, String accountType);
 //    TppRefAccountTypeEntity
 //    List<TppRefProductRegisterTypeEntity> findAllByProductClassCodeAndAccountType(String productClassCode, String accountType);
-    List<TppRefProductRegisterTypeEntity> findAllByProductClassCodeAndAccountType(String productClassCode, TppRefAccountTypeEntity accountType);
+    List<TppRefProductRegisterTypeEntity> findAllByProductClassCodeAndAccountType(
+            String productClassCode,
+            TppRefAccountTypeEntity accountType
+    );
 
-    List<TppRefProductRegisterTypeEntity> findAllByProductClassCodeAndValue(String productClassCode, String registerTypeCode);
+    List<TppRefProductRegisterTypeEntity> findAllByProductClassCodeAndValue(
+            String productClassCode,
+            String registerTypeCode
+    );
 
-    TppRefProductRegisterTypeEntity getByValue(String typeCode);
+    TppRefProductRegisterTypeEntity getByValue(
+            String typeCode
+    );
 }

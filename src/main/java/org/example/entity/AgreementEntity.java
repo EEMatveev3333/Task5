@@ -34,7 +34,8 @@ public class AgreementEntity {
 //    private Integer productId;
     @Getter @Setter
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "product_id", referencedColumnName = "id")
-    private TppProductEntity productId;
+    private Integer productId;
+//    private TppProductEntity productId;
 
     @Basic
     @Column(name = "general_agreement_id")
@@ -120,9 +121,9 @@ public class AgreementEntity {
     @Column(name = "maximal_interest_rate_coefficient_action")
     private String maximalInterestRateCoefficientAction;
 
-    public AgreementEntity(String number) {
-        this.number = number;
-    }
+//    public AgreementEntity(String number) {
+//        this.number = number;
+//    }
 }
 
 

@@ -38,8 +38,8 @@ public class TppProductEntity {
 
     @Getter @Setter
     @ManyToOne(fetch = FetchType.LAZY) @JoinColumn(name = "product_code_id", referencedColumnName = "internal_id")
-    private TppRefProductClassEntity productCodeId;
-
+    //private TppRefProductClassEntity productCodeId;
+    private Long productCodeId;
 
     @Basic
     @Column(name = "client_id")
@@ -105,18 +105,18 @@ public class TppProductEntity {
     @Column(name = "state")
     private String state;
 
-    @OneToMany(mappedBy = "productId")
-    private List<AgreementEntity> agreements = new ArrayList<>();
-
-    public void addAgreement(AgreementEntity agreement){
-        agreement.setProductId(this); //setAgreementId(this);
-        //agreement.setGeneralAgreementId(this);
-        agreements.add(agreement);
-    }
-
-    public Iterator<AgreementEntity> getAgreements() {
-        return agreements.iterator();
-    }
+//    @OneToMany(mappedBy = "productId")
+//    private List<AgreementEntity> agreements = new ArrayList<>();
+//
+//    public void addAgreement(AgreementEntity agreement){
+//        agreement.setProductId(this); //setAgreementId(this);
+//        //agreement.setGeneralAgreementId(this);
+//        agreements.add(agreement);
+//    }
+//
+//    public Iterator<AgreementEntity> getAgreements() {
+//        return agreements.iterator();
+//    }
 
 }
 

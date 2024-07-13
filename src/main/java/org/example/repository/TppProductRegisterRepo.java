@@ -8,7 +8,26 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface TppProductRegisterRepo extends JpaRepository<TppProductRegisterEntity, Integer> {
-    boolean existsByProductIdAndRegisterType(TppProductEntity productId, TppRefProductRegisterTypeEntity registerType);
-    TppProductRegisterEntity getByProductIdAndRegisterType(TppProductEntity productId, TppRefProductRegisterTypeEntity registerType);
+
+//    boolean existsByProductIdAndRegisterType(
+//            TppProductEntity productId,
+//            TppRefProductRegisterTypeEntity registerType
+//    );
+//
+//    TppProductRegisterEntity getByProductIdAndRegisterType(
+//            TppProductEntity productId,
+//            TppRefProductRegisterTypeEntity registerType
+//    );
+
+    boolean existsByProductIdAndRegisterType(
+            Long productId,
+            String registerType
+    );
+
+    TppProductRegisterEntity getByProductIdAndRegisterType(
+            Long productId,
+            String registerType
+    );
+
 }
 

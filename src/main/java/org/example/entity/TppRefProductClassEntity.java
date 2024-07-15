@@ -9,7 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;*/
 import jakarta.persistence.*;
 
-@Table(name = "tpp_ref_product_class", schema = "public", catalog = "postgres")
+@Table(name = "tpp_ref_product_class", schema = "public", catalog = "postgres",
+        uniqueConstraints = @UniqueConstraint(
+                columnNames = {"value"}
+        ))
 @Entity
 @Data
 @Getter

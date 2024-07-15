@@ -1,9 +1,6 @@
 package org.example.repository;
 
-import org.example.entity.AccountEntity;
 import org.example.entity.AccountPoolEntity;
-
-import org.example.entity.TppRefProductRegisterTypeEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -29,7 +26,13 @@ public interface AccountPoolRepo  extends JpaRepository<AccountPoolEntity, Integ
 //    @Query("select AE.accountNumber  from account_pool APE " +
 //            " inner join AccountEntity AE  on APE.id = AE.accountPoolId " +
 //            " where APE.id = :AccountPoolEntity_ID ")
-    @Query("select AE.account_number from account_pool APE inner join account AE  on APE.id = AE.account_pool_id where APE.id = :AccountPoolEntity_ID")
+
+   @Query("select AE.accountNumber from AccountPoolEntity APE inner join AccountEntity AE  on APE = AE.accountPoolId where APE.id = :AccountPoolEntity_ID")
     List<String> getAccountsByAccountPoolEntityID(@Param("AccountPoolEntity_ID")Integer value);
 
+//    @Query("select AE.account_number from account AE where AE.id =:AccountPoolEntity_ID")
+//    List<String> getAccountsByAccountPoolEntityID(@Param("AccountPoolEntity_ID")Integer value);
+
+//    @Query("select APE.branchCode from AccountPoolEntity APE")
+//    List<String> getAccountsByAccountPoolEntityID();
 }

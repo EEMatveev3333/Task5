@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AccountRepo extends JpaRepository<AccountEntity, Integer> {
 
-    void deleteAllByAccountPoolIdAndAccountNumber(Integer accountPoolId, String accountNumber);
+    void deleteAllByAccountPoolIdAndAccountNumber(AccountPoolEntity accountPoolId, String accountNumber);
 
 }
 

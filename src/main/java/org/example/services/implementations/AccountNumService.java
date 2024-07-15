@@ -27,24 +27,28 @@ public class AccountNumService implements AccountNumServiceIntf {
                 registerType.getValue()
         );
 
+
 //        if (accountPool.getAccounts().isEmpty()) {
 //            throw new NoResultException("В пуле счетов закончились счета");
 //        }
 
         if (accountPoolRepo.getAccountsByAccountPoolEntityID(accountPool.getId()).isEmpty()) {
+//        if (accountPoolRepo.getAccountsByAccountPoolEntityID().isEmpty()) {
             throw new NoResultException("В пуле счетов закончились счета");
         }
 
 //        List<String> accounts = accountPool.getAccounts();
         List<String> accounts = accountPoolRepo.getAccountsByAccountPoolEntityID(accountPool.getId());
-        String retAccountNum = accounts.get(0);
+//        List<String> accounts = accountPoolRepo.getAccountsByAccountPoolEntityID();
+       String retAccountNum = accounts.get(0);
 
         // Удаляем счёт из пула
         //accounts111.remove(0);
-        accountRepo.deleteAllByAccountPoolIdAndAccountNumber(accountPool.getId(),retAccountNum);
+        accountRepo.deleteAllByAccountPoolIdAndAccountNumber(accountPool,retAccountNum);
 
 
         return retAccountNum;
+//    return mdmCode;
     }
 
     @Autowired

@@ -66,10 +66,10 @@ public class CreateAccountService implements CreateAccountServiceIntf {
         //•	вернуть Статус: 404/Not found, Текст: Код Продукта <значение> не найдено в Каталоге продуктов <схема.имя таблицы БД> для данного типа Регистра
 
         // Определяем тип регистра
-//        List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByProductClassCodeAndValue(productId.getProductCodeId().getValue(), accountRequest.getRegistryTypeCode());
-//        if (registerTypes.isEmpty()) {
-//            throw new NoResultException("Код Продукта <"+productId.getProductCodeId().getValue()+"> не найдено в Каталоге продуктов для данного типа Регистра \""+accountRequest.getRegistryTypeCode()+"\"");
-//        }
+        List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByProductClassCodeAndValue(productId.getProductCodeId().getValue(), accountRequest.getRegistryTypeCode());
+        if (registerTypes.isEmpty()) {
+            throw new NoResultException("Код Продукта <"+productId.getProductCodeId().getValue()+"> не найдено в Каталоге продуктов для данного типа Регистра \""+accountRequest.getRegistryTypeCode()+"\"");
+        }
         ////////////////
 
 //        //шаг 4 находим ссылку на aacount по параметрам

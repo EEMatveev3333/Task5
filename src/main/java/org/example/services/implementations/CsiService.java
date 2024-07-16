@@ -30,6 +30,10 @@ public class CsiService implements CsiServiceIntf {
     @Autowired
     private TppRefAccountTypeRepo accountTypeRepo;
 
+    //---
+    @Autowired
+    private TppRefProductClassRepo productClassRepo;
+
     @Transactional
     public CsiResponse createCsi(CreateCsiRequest csiRequest){
         CsiResponse csiResponse = new CsiResponse();
@@ -61,8 +65,9 @@ public class CsiService implements CsiServiceIntf {
 //            Если ни одной записи не найдено
 //•	вернуть Статус: 404/Not Found, Текст: КодПродукта <значение> не найдено в Каталоге продуктов tpp_ref_product_class
 
-            List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByProductClassCodeAndAccountType(csiRequest.getProductCode(), accountTypeRepo.getByValue( "Клиентский"));
+            //List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByProductClassCodeAndAccountType(csiRequest.getProductCode(), accountTypeRepo.getByValue( "Клиентский"));
             //List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByProductClassCodeAndAccountType(productClassCode, "Клиентский");
+            List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByProductClassCodeAndAccountType(productClassRepo.getByValue(csiRequest.getProductCode()), accountTypeRepo.getByValue( "Клиентский"));
             if (registerTypes.isEmpty()) {
                 throw new NoResultException("КодПродукта =\""+csiRequest.getProductCode()+"\" не найден в Каталоге продуктов (tpp_ref_product_register_type)");
             }
@@ -105,8 +110,11 @@ public class CsiService implements CsiServiceIntf {
             // Создаём связанные ПР
             for (TppRefProductRegisterTypeEntity registerType: registerTypes) {
                 // Получаем номер счёта
-                String accountNum = accountNumService.getAccountNum(csiRequest.getBranchCode(), csiRequest.getIsoCurrencyCode(), csiRequest.getMdmCode(), registerType);
-                TppProductRegisterEntity prEntity = new TppProductRegisterEntity(productEntity.getProductCodeId(), registerType.getValue(), accountNum, csiRequest.getIsoCurrencyCode());
+                //String accountNum = accountNumService.getAccountNum(csiRequest.getBranchCode(), csiRequest.getIsoCurrencyCode(), csiRequest.getMdmCode(), registerType);
+                //TppProductRegisterEntity prEntity = new TppProductRegisterEntity(productEntity.getProductCodeId(), registerType.getValue(), accountNum, csiRequest.getIsoCurrencyCode());
+                AccountEntity account = accountNumService.getAccount(csiRequest.getBranchCode(), csiRequest.getIsoCurrencyCode(), csiRequest.getMdmCode(), Integer.toString(csiRequest.getPriority()), registerType);
+                TppProductRegisterEntity prEntity = new TppProductRegisterEntity(productEntity, registerType, account, csiRequest.getIsoCurrencyCode());
+
                 registerRepo.save(prEntity);
                 // Созданные счета добавляем в ответ
                 csiResponse.getData().getRegisterId().add(prEntity.getId());

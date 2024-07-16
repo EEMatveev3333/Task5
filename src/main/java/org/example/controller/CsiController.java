@@ -32,6 +32,12 @@ public class CsiController {
 
         try {
             JsonSchema csiRequestJsonSchema = CreateCsiRequest.getJsonSchema();
+//            Проверка Request.Body на обязательность.
+//                    Если не заполнено хотя бы одно обязательное поле (см. Request.Body)
+//•	вернуть Статус: 400/Bad Request, Текст: Имя обязательного параметра <значение> не заполнено.
+//                    Если все обязательные поля заполнены
+//•	Перейти на Шаг 2
+
             CreateCsiRequest csiRequest = validateAndParseJson(requestJsonStr, csiRequestJsonSchema, CreateCsiRequest.class);
             csiResponse = csiService.createCsi(csiRequest);
             httpStatus = HttpStatus.OK;

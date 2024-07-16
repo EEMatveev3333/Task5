@@ -28,6 +28,7 @@ public class AccountController {
         HttpStatus httpStatus;
 
         try {
+
             CreateAccountRequest accountRequest = validateAndParseJson(requestJsonStr, CreateAccountRequest.getJsonSchema(), CreateAccountRequest.class);
             accountResponse = accountService.createAccount(accountRequest);
             httpStatus = HttpStatus.OK;

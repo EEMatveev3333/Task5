@@ -35,70 +35,115 @@ public class CsiService implements CsiServiceIntf {
         CsiResponse csiResponse = new CsiResponse();
         TppProductEntity productEntity;
         Integer productId = csiRequest.getInstanceId();
+
+//        Шаг 2
+//        Если ИД ЭП в поле Request.Body.instanceId не задано (NULL/Пусто), то выполняется процесс создания нового экземпляра
+//•	Перейти на шаг 1.1
+//        Если ИД ЭП в поле Request.Body.instanceId не пустое, то изменяется состав ДС // сделка (доп.Соглашение)
+//•	Перейти на шаг 2.1
+
+//шаг 1.1
+        if (productId == null) {
+
+            //---
+            //TppRefAccountTypeEntity productClassCode = accountTypeRepo.getByValue(csiRequest.getProductCode());
+            // Проверяем корректность переданного значения в поле ProductCode
+            //---
+            List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByProductClassCodeAndAccountType(csiRequest.getProductCode(), accountTypeRepo.getByValue( "Клиентский"));
+            //List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByProductClassCodeAndAccountType(productClassCode, "Клиентский");
+            if (registerTypes.isEmpty()) {
+                throw new NoResultException("КодПродукта =\""+csiRequest.getProductCode()+"\" не найден в Каталоге продуктов (tpp_ref_product_register_type)");
+            }
+
+//            Шаг 1.1
+//            Проверка таблицы ЭП (tpp_product) на дубли. Для этого необходимо отобрать строки по условию
+//            tpp_product.number == Request.Body.ContractNumber
+//            Если результат отбора не пуст, значит имеются повторы
 //
+//            Если повторы найдены
+//•	вернуть Статус: 400/Bad Request, Текст: Параметр ContractNumber № договора <значение> уже существует для ЭП с ИД  <значение1>.
+//            Если повторов нет
+//•	Перейти на Шаг 1.2
+
+
+            // Проверяем что нет договора с таким же номером
+            TppProductEntity existProduct = productRepo.getByNumber(csiRequest.getContractNumber());
+            if (existProduct != null) {
+                throw new IllegalArgumentException("Параметр ContractNumber \"№ договора\" "+csiRequest.getContractNumber()+" уже существует для \n ЭП с ИД "+existProduct.getId());
+            }
+
+            // Создаем ЭП
+            productEntity = ProductBuilder.createProductEntity(csiRequest);
+
+            // Создаём связанные ПР
+            for (TppRefProductRegisterTypeEntity registerType: registerTypes) {
+                // Получаем номер счёта
+                String accountNum = accountNumService.getAccountNum(csiRequest.getBranchCode(), csiRequest.getIsoCurrencyCode(), csiRequest.getMdmCode(), registerType);
+                TppProductRegisterEntity prEntity = new TppProductRegisterEntity(productEntity.getProductCodeId(), registerType.getValue(), accountNum, csiRequest.getIsoCurrencyCode());
+                registerRepo.save(prEntity);
+                // Созданные счета добавляем в ответ
+                csiResponse.getData().getRegisterId().add(prEntity.getId());
+            }
+
+        }
+//шаг 2.1
+        else
+        {
+//            Шаг 2.1
+//            Проверка таблицы ЭП (tpp_product) на существование ЭП. Для этого необходимо отобрать строки по условию
+//            tpp_product.id == Request.Body. instanceId
 //
-//        if (productId == null) {
+//            Если запись не найдена
+//•	вернуть Статус: 404/Not Found, Текст: Экземпляр продукта с параметром instanceId <значение> не найден.
+//                Если запись найдена
+//•	Перейти на Шаг 2.2
+
+
+            Optional<TppProductEntity> product = productRepo.findById(productId);
+            // Проверяем что нашли продукт
+            if (product.isEmpty()) {
+                throw new IllegalArgumentException("Не найден договор соответствующий параметру instanceId \"Идентификатор экземпляра продукта\" = "+csiRequest.getInstanceId());
+            }
+            productEntity = product.get();
+
+//            Шаг 2.2
+//            Проверка таблицы ДС (agreement) на дубли
+//            Отобрать записи по условию agreement.number == Request.Body.Arrangement[N].Number
 //
-//            //---
-//            //TppRefAccountTypeEntity productClassCode = accountTypeRepo.getByValue(csiRequest.getProductCode());
-//            // Проверяем корректность переданного значения в поле ProductCode
-//            //---
-//            List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByProductClassCodeAndAccountType(csiRequest.getProductCode(), accountTypeRepo.getByValue( "Клиентский"));
-//            //List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByProductClassCodeAndAccountType(productClassCode, "Клиентский");
-//            if (registerTypes.isEmpty()) {
-//                throw new NoResultException("КодПродукта =\""+csiRequest.getProductCode()+"\" не найден в Каталоге продуктов (tpp_ref_product_register_type)");
-//            }
-//
-//            // Проверяем что нет договора с таким же номером
-//            TppProductEntity existProduct = productRepo.getByNumber(csiRequest.getContractNumber());
-//            if (existProduct != null) {
-//                throw new IllegalArgumentException("Параметр ContractNumber \"№ договора\" "+csiRequest.getContractNumber()+" уже существует для \n ЭП с ИД "+existProduct.getId());
-//            }
-//
-//            // Создаем ЭП
-//            productEntity = ProductBuilder.createProductEntity(csiRequest);
-//
-//            // Создаём связанные ПР
-//            for (TppRefProductRegisterTypeEntity registerType: registerTypes) {
-//                // Получаем номер счёта
-//                String accountNum = accountNumService.getAccountNum(csiRequest.getBranchCode(), csiRequest.getIsoCurrencyCode(), csiRequest.getMdmCode(), registerType);
-//                TppProductRegisterEntity prEntity = new TppProductRegisterEntity(productEntity.getProductCodeId(), registerType.getValue(), accountNum, csiRequest.getIsoCurrencyCode());
-//                registerRepo.save(prEntity);
-//                // Созданные счета добавляем в ответ
-//                csiResponse.getData().getRegisterId().add(prEntity.getId());
-//            }
-//
-//        } else {
-//            Optional<TppProductEntity> product = productRepo.findById(productId);
-//            // Проверяем что нашли продукт
-//            if (product.isEmpty()) {
-//                throw new IllegalArgumentException("Не найден договор соответствующий параметру instanceId \"Идентификатор экземпляра продукта\" = "+csiRequest.getInstanceId());
-//            }
-//            productEntity = product.get();
-//
-//            // Проверяем что нет совпадений по номерам доп.соглашений
-//            for (CreateCsiRequest.Agreement agreement: csiRequest.getInstanceAgreement()) {
-//                Iterator<AgreementEntity> agreements = productEntity.getAgreements();
-//                while (agreements.hasNext()) {
-//                    AgreementEntity agreementEntity = agreements.next();
-//                    if (agreementEntity.getNumber().equals(agreement.getNumber())) {
-//                        throw new IllegalArgumentException(" Параметр Number \"№ Дополнительного соглашения (сделки)\" = \""+agreement.getNumber()+"\" уже существует для ЭП с ИД "+productId);
-//                    }
-//                }
-//                // Добавляем новое доп.соглашение
-//                AgreementEntity agreementsEntity = new AgreementEntity(agreement.getNumber());
-//                productEntity.addAgreement(agreementsEntity);
-//                agreementsRepo.save(agreementsEntity);
-//                // Созданные доп.соглашения добавляем в ответ
-//                csiResponse.getData().getSupplementaryAgreementId().add(agreementsEntity.getId());
-//            }
-//
-//        }
-//
-//        productRepo.saveAndFlush(productEntity);
-//
-//        // Дозаполняем ответ
-//        csiResponse.getData().setInstanceId(productEntity.getId());
+//            Если записи найдены
+//•	вернуть Статус: 400/Bad Request, Текст: Параметр № Дополнительного соглашения (сделки) Number <значение> уже существует для ЭП с ИД  <значение1>.
+//            Если записей нет
+//•	перейти на Шаг 2.3
+
+            // Проверяем что нет совпадений по номерам доп.соглашений
+            for (CreateCsiRequest.Agreement agreement: csiRequest.getInstanceAgreement()) {
+                Iterator<AgreementEntity> agreements = productEntity.getAgreements();
+                while (agreements.hasNext()) {
+                    AgreementEntity agreementEntity = agreements.next();
+                    if (agreementEntity.getNumber().equals(agreement.getNumber())) {
+                        throw new IllegalArgumentException(" Параметр Number \"№ Дополнительного соглашения (сделки)\" = \""+agreement.getNumber()+"\" уже существует для ЭП с ИД "+productId);
+                    }
+                }
+
+//                Шаг 8.
+//•	Добавить строку в таблицу ДС (agreement)
+//•	заполнить соотв. поля ДС согласно составу Request.Body, см. массив Arrangement[…]
+//•	сформировать agreement.Id , связать с таблицей ЭП по ИД ЭП, где tpp_product.id  == agreement.product_id
+
+                // Добавляем новое доп.соглашение
+                AgreementEntity agreementsEntity = new AgreementEntity(agreement.getNumber());
+                productEntity.addAgreement(agreementsEntity);
+                agreementsRepo.save(agreementsEntity);
+                // Созданные доп.соглашения добавляем в ответ
+                csiResponse.getData().getSupplementaryAgreementId().add(agreementsEntity.getId());
+            }
+
+        }
+
+        productRepo.saveAndFlush(productEntity);
+
+        // Дозаполняем ответ
+        csiResponse.getData().setInstanceId(productEntity.getId());
 
         return csiResponse;
     }

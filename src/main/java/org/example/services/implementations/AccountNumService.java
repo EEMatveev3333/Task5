@@ -1,7 +1,9 @@
 package org.example.services.implementations;
 
 
+import org.example.entity.AccountEntity;
 import org.example.entity.AccountPoolEntity;
+import org.example.entity.TppProductEntity;
 import org.example.entity.TppRefProductRegisterTypeEntity;
 import org.example.repository.AccountPoolRepo;
 import org.example.repository.AccountRepo;
@@ -19,11 +21,45 @@ public class AccountNumService implements AccountNumServiceIntf {
 
     private AccountRepo accountRepo;
 
-    public String getAccountNum(String branchCode, String currencyCode, String mdmCode, TppRefProductRegisterTypeEntity registerType) {
-        AccountPoolEntity accountPool = accountPoolRepo.getByBranchCodeAndCurrencyCodeAndMdmCodeAndRegisterTypeCode(
+//    public String getAccountNum(String branchCode, String currencyCode, String mdmCode, String priorityCode, TppRefProductRegisterTypeEntity registerType) {
+//        AccountPoolEntity accountPool = accountPoolRepo.getByBranchCodeAndCurrencyCodeAndMdmCodeAndPriorityCodeAndRegisterTypeCode(
+//                branchCode,
+//                currencyCode,
+//                mdmCode,
+//                priorityCode,
+//                registerType.getValue()
+//        );
+//
+//
+////        if (accountPool.getAccounts().isEmpty()) {
+////            throw new NoResultException("В пуле счетов закончились счета");
+////        }
+//
+//        if (accountPoolRepo.getAccountsByAccountPoolEntityID(accountPool.getId()).isEmpty()) {
+////        if (accountPoolRepo.getAccountsByAccountPoolEntityID().isEmpty()) {
+//            throw new NoResultException("В пуле счетов закончились счета");
+//        }
+//
+////        List<String> accounts = accountPool.getAccounts();
+//        List<String> accounts = accountPoolRepo.getAccountsByAccountPoolEntityID(accountPool.getId());
+////        List<String> accounts = accountPoolRepo.getAccountsByAccountPoolEntityID();
+//       String retAccountNum = accounts.get(0);
+//
+//        // Удаляем счёт из пула
+//        //accounts111.remove(0);
+//        accountRepo.deleteAllByAccountPoolIdAndAccountNumber(accountPool,retAccountNum);
+//        //accountRepo.sa
+//
+//        return retAccountNum;
+////    return mdmCode;
+//    }
+
+    public AccountEntity getAccount(String branchCode, String currencyCode, String mdmCode, String priorityCode, TppRefProductRegisterTypeEntity registerType) {
+        AccountPoolEntity accountPool = accountPoolRepo.getByBranchCodeAndCurrencyCodeAndMdmCodeAndPriorityCodeAndRegisterTypeCode(
                 branchCode,
                 currencyCode,
                 mdmCode,
+                priorityCode,
                 registerType.getValue()
         );
 
@@ -38,18 +74,19 @@ public class AccountNumService implements AccountNumServiceIntf {
         }
 
 //        List<String> accounts = accountPool.getAccounts();
-        List<String> accounts = accountPoolRepo.getAccountsByAccountPoolEntityID(accountPool.getId());
+        List<AccountEntity> accounts = accountPoolRepo.getAccountsByAccountPoolEntityID(accountPool.getId());
 //        List<String> accounts = accountPoolRepo.getAccountsByAccountPoolEntityID();
-       String retAccountNum = accounts.get(0);
+        AccountEntity retAccountNum = accounts.get(0);
 
         // Удаляем счёт из пула
         //accounts111.remove(0);
-        accountRepo.deleteAllByAccountPoolIdAndAccountNumber(accountPool,retAccountNum);
-
+        //accountRepo.deleteAllByAccountPoolIdAndAccountNumber(accountPool,retAccountNum);
+        //accountRepo.sa
 
         return retAccountNum;
 //    return mdmCode;
     }
+
 
     @Autowired
     public void setAccountPoolRepo(AccountPoolRepo accountPoolRepo) {

@@ -68,11 +68,21 @@ public class TppProductRegisterEntity {
     @Column(name = "account_number")
     private String accountNum;
 
-    public TppProductRegisterEntity(TppProductEntity productId, TppRefProductRegisterTypeEntity registerType, String accountNum, String currency) {
+//    public TppProductRegisterEntity(TppProductEntity productId, TppRefProductRegisterTypeEntity registerType, String accountNum, String currency) {
+////public TppProductRegisterEntity(Long productId, String registerType, String accountNum, String currency) {
+//        this.productId = productId;
+//        this.registerType = registerType;
+//        this.accountNum = accountNum;
+//        this.currency = currency;
+//        this.state = AccountState.OPEN;
+//    }
+
+    public TppProductRegisterEntity(TppProductEntity productId, TppRefProductRegisterTypeEntity registerType, AccountEntity account, String currency) {
 //public TppProductRegisterEntity(Long productId, String registerType, String accountNum, String currency) {
         this.productId = productId;
         this.registerType = registerType;
-        this.accountNum = accountNum;
+        this.accountNum = account.getAccountNumber();
+        this.account = Long.valueOf(account.getId());
         this.currency = currency;
         this.state = AccountState.OPEN;
     }

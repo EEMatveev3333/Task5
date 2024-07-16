@@ -49,6 +49,18 @@ public class CsiService implements CsiServiceIntf {
             //TppRefAccountTypeEntity productClassCode = accountTypeRepo.getByValue(csiRequest.getProductCode());
             // Проверяем корректность переданного значения в поле ProductCode
             //---
+
+//            Шаг 1.3
+//            По КодуПродукта найти связные записи в Каталоге Типа регистра
+//            Request.Body.ProductCode == tpp_ref_product_class.value
+//            среди найденных записей отобрать те, у которых
+//            tpp_ref_product_register_type.account_type имеет значение  “Клиентский”
+//
+//            Если найдено одна или более записей
+//•	Запомнить найденные registerType с целью добавления соответствующего числа строк в таблицу ПР (tpp_product_registry), перейти на Шаг 1.4
+//            Если ни одной записи не найдено
+//•	вернуть Статус: 404/Not Found, Текст: КодПродукта <значение> не найдено в Каталоге продуктов tpp_ref_product_class
+
             List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByProductClassCodeAndAccountType(csiRequest.getProductCode(), accountTypeRepo.getByValue( "Клиентский"));
             //List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByProductClassCodeAndAccountType(productClassCode, "Клиентский");
             if (registerTypes.isEmpty()) {
@@ -72,8 +84,23 @@ public class CsiService implements CsiServiceIntf {
                 throw new IllegalArgumentException("Параметр ContractNumber \"№ договора\" "+csiRequest.getContractNumber()+" уже существует для \n ЭП с ИД "+existProduct.getId());
             }
 
+//            Шаг 1.4
+//            Добавить строку в таблицу tpp_product, заполнить согласно Request.Body:
+//            Сформировать/Запомнить новый ИД ЭП tpp_product.id, д
+//            Перейти на Шаг 1.5
+
             // Создаем ЭП
             productEntity = ProductBuilder.createProductEntity(csiRequest);
+
+//            Шаг 1.5
+//            Добавить в таблицу ПР (tpp_product_registry) строки, заполненные:
+//•	Id - ключ таблицы
+//•	product_id - ссылка на таблицу ЭП, где tpp_product.id  == tpp_product_registry.product_id
+//•	type – тип ПР (лицевого/внутрибанковского счета)
+//•	account_id – ид счета
+//•	currency_code – код валюты счета
+//•	state – статус счета, enum (0, Закрыт/1, Открыт/2, Зарезервирован/3, Удалён)
+//            (см. задачу на создание продуктового регистра по методу corporate-settlement-account/create)
 
             // Создаём связанные ПР
             for (TppRefProductRegisterTypeEntity registerType: registerTypes) {

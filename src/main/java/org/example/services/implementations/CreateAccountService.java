@@ -34,20 +34,25 @@ public class CreateAccountService implements CreateAccountServiceIntf {
 
         CreateAccountResponse accountResponse = new CreateAccountResponse();
 
-        // Ищем экземпляр продукта по переданному Id
-        if (productRepo.existsById(accountRequest.getInstanceId())) {
-            productId = productRepo.getReferenceById(accountRequest.getInstanceId());
-        } else {
-            throw new NoResultException("По instanceId \"Идентификатор ЭП\" <"+accountRequest.getInstanceId()+"> не найден экземпляр продукта.");
-        }
+
 
         //        Шаг 2.
-        //        Проверка таблицы ПР (таблица tpp_product_register) на дубли. Для этого необходимо отобрать строки по условию tpp_product_register.product_id == Request.Body.InstanceID и у результата отобрать строки по условию tpp_product_register.type == Request.Body.registryTypeCode. Если результат отбора не пуст, значит имеются повторы
+        //        Проверка таблицы ПР (таблица tpp_product_register) на дубли.
+        //        Для этого необходимо отобрать строки по условию tpp_product_register.product_id == Request.Body.InstanceID
+        //        и у результата отобрать строки по условию tpp_product_register.type == Request.Body.registryTypeCode.
+        //
+        //        Если результат отбора не пуст, значит имеются повторы
         //
         //        Если повторы найдены
         //•	вернуть Статус: 400/Bad Request, Текст: Параметр registryTypeCode тип регистра <значение_кода> уже существует для ЭП с ИД  <значение_ИД_ЭП>.
         //        Если повторов нет
         //•	Перейти на Шаг 3.
+
+        // Ищем экземпляр продукта по переданному Id
+        if (productRepo.existsById(accountRequest.getInstanceId()))
+            productId = productRepo.getReferenceById(accountRequest.getInstanceId());
+        else
+            throw new NoResultException("По instanceId \"Идентификатор ЭП\" <"+accountRequest.getInstanceId()+"> не найден экземпляр продукта.");
 
         // Проверяем на дубли
         TppRefProductRegisterTypeEntity registerTypeEntity = registerTypeRepo.getByValue(accountRequest.getRegistryTypeCode());
@@ -66,9 +71,11 @@ public class CreateAccountService implements CreateAccountServiceIntf {
         //•	вернуть Статус: 404/Not found, Текст: Код Продукта <значение> не найдено в Каталоге продуктов <схема.имя таблицы БД> для данного типа Регистра
 
         // Определяем тип регистра
-        List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByProductClassCodeAndValue(productId.getProductCodeId().getValue(), accountRequest.getRegistryTypeCode());
+        //List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByProductClassCodeAndValue(productId.getProductCodeId().getValue(), accountRequest.getRegistryTypeCode());
+        List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByValue(accountRequest.getRegistryTypeCode());
+
         if (registerTypes.isEmpty()) {
-            throw new NoResultException("Код Продукта <"+productId.getProductCodeId().getValue()+"> не найдено в Каталоге продуктов для данного типа Регистра \""+accountRequest.getRegistryTypeCode()+"\"");
+            throw new NoResultException("Код Продукта <"+productId.getProductCodeId()+"> не найдено в Каталоге продуктов для данного типа Регистра \""+accountRequest.getRegistryTypeCode()+"\"");
         }
         ////////////////
 

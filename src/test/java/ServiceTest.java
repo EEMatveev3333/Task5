@@ -28,6 +28,8 @@ import java.util.Optional;
 public class ServiceTest {
 
     @MockBean
+    private AccountRepo accountRepo;
+    @MockBean
     private AccountPoolRepo poolRepo;
     @MockBean
     private TppProductRegisterRepo registerRepo;
@@ -53,14 +55,26 @@ public class ServiceTest {
 //        accountPool.setMdmCode("cl001");
 //        accountPool.setCurrencyCode("A98");
 //        accountPool.setRegisterTypeCode("03.012.002_47533_ComSoLd");
-//        List<String> accounts = new ArrayList<>();
-//        accounts.add("475335516415314841861");
-//        accounts.add("4753321651354151");
-//        accounts.add("4753352543276345");
-//        accountPool.setAccounts(accounts);
+////        List<String> accounts = new ArrayList<>();
+////        accounts.add("475335516415314841861");
+////        accounts.add("4753321651354151");
+////        accounts.add("4753352543276345");
+////        accountPool.setAccounts(accounts);
+//        AccountEntity acc1 = new AccountEntity();
+//        acc1.setAccountPoolId(accountPool);
+//        acc1.setAccountNumber("475335516415314841861");
+//
+//        AccountEntity acc2 = new AccountEntity();
+//        acc2.setAccountPoolId(accountPool);
+//        acc2.setAccountNumber("4753321651354151");
+//
+//        AccountEntity acc3 = new AccountEntity();
+//        acc3.setAccountPoolId(accountPool);
+//        acc3.setAccountNumber("4753352543276345");
+//
 //        return accountPool;
 //    }
-
+//
 //
 //    @Test
 //    @DisplayName("Тест работы пула счетов")
@@ -73,13 +87,13 @@ public class ServiceTest {
 //        given(poolRepo.getByBranchCodeAndCurrencyCodeAndMdmCodeAndRegisterTypeCode("001", "A98", "cl001", "03.012.002_47533_ComSoLd"))
 //                .willReturn(accountPool);
 //
-//        Assertions.assertEquals("475335516415314841861", accountNumService.getAccountNum("001", "A98", "cl001", typeEntity), "Из пула счетов вернули не тот номер счёта");
+//        Assertions.assertEquals("475335516415314841861", accountNumService.getAccount("001", "A98", "cl001", typeEntity), "Из пула счетов вернули не тот номер счёта");
 //        Assertions.assertEquals(2, accountPool.getAccounts().size(), "Из пула счетов не удалён использованный счёт");
-//        Assertions.assertEquals("4753321651354151", accountNumService.getAccountNum("001", "A98", "cl001", typeEntity), "Из пула счетов вернули не тот номер счёта");
+//        Assertions.assertEquals("4753321651354151", accountNumService.getAccount("001", "A98", "cl001", typeEntity), "Из пула счетов вернули не тот номер счёта");
 //        Assertions.assertEquals(1, accountPool.getAccounts().size(), "Из пула счетов не удалён использованный счёт");
-//        Assertions.assertEquals("4753352543276345", accountNumService.getAccountNum("001", "A98", "cl001", typeEntity), "Из пула счетов вернули не тот номер счёта");
+//        Assertions.assertEquals("4753352543276345", accountNumService.getAccount("001", "A98", "cl001", typeEntity), "Из пула счетов вернули не тот номер счёта");
 //        Assertions.assertEquals(0, accountPool.getAccounts().size(), "Из пула счетов не удалён использованный счёт");
-//        Assertions.assertThrows(NoResultException.class, ()->accountNumService.getAccountNum("001", "A98", "cl001", typeEntity), "Не сгенерировалась ошибка при отсутствии счёта в пуле");
+//        Assertions.assertThrows(NoResultException.class, ()->accountNumService.getAccount("001", "A98", "cl001", typeEntity), "Не сгенерировалась ошибка при отсутствии счёта в пуле");
 //    }
 //
 //    @Test
@@ -142,7 +156,8 @@ public class ServiceTest {
 //                .willReturn(registerTypeEntity3);
 //        given(registerRepo.existsByProductIdAndRegisterType(productId, registerTypeEntity3))
 //                .willReturn(false);
-//        given(registerTypeRepo.findAllByProductClassCodeAndValue(productId.getProductCodeId().getValue(), accountRequestBad3.getRegistryTypeCode()))
+////        given(registerTypeRepo.findAllByProductClassCodeAndValue(productId.getProductCodeId().getValue(), accountRequestBad3.getRegistryTypeCode()))
+//        given(registerTypeRepo.findAllByProductClassCodeAndValue(productId.getProductCodeId(), accountRequestBad3.getRegistryTypeCode()))
 //                .willReturn(registerTypes);
 //        // test case 3 - run
 //        Assertions.assertThrows(NoResultException.class, ()->accountService.createAccount(accountRequestBad3), "Не сработала проверка поиск подходящего типа регистра");

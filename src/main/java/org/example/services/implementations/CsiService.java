@@ -151,15 +151,27 @@ public class CsiService implements CsiServiceIntf {
 //•	перейти на Шаг 2.3
 
             // Проверяем что нет совпадений по номерам доп.соглашений
+            // !!! EEM Проверяем что нет совпадений в AgreementEntity по номерам доп.соглашений agreement.getNumber и productEntity
+//            for (CreateCsiRequest.Agreement agreement: csiRequest.getInstanceAgreement()) {
+//                Iterator<AgreementEntity> agreements = productEntity.getAgreements();
+//                while (agreements.hasNext()) {
+//                    AgreementEntity agreementEntity = agreements.next();
+//                    if (agreementEntity.getNumber().equals(agreement.getNumber())) {
+//                        throw new IllegalArgumentException(" Параметр Number \"№ Дополнительного соглашения (сделки)\" = \""+agreement.getNumber()+"\" уже существует для ЭП с ИД "+productId);
+//                    }
+//                }
             for (CreateCsiRequest.Agreement agreement: csiRequest.getInstanceAgreement()) {
-                Iterator<AgreementEntity> agreements = productEntity.getAgreements();
-                while (agreements.hasNext()) {
-                    AgreementEntity agreementEntity = agreements.next();
-                    if (agreementEntity.getNumber().equals(agreement.getNumber())) {
+                List<AgreementEntity> lstAgreementEntity = agreementsRepo.findAllByProductIdAndNumber(productEntity,agreement.getNumber());
+                if (!lstAgreementEntity.isEmpty()) {
                         throw new IllegalArgumentException(" Параметр Number \"№ Дополнительного соглашения (сделки)\" = \""+agreement.getNumber()+"\" уже существует для ЭП с ИД "+productId);
-                    }
                 }
-
+//                Iterator<AgreementEntity> agreements = productEntity.getAgreements();
+//                while (agreements.hasNext()) {
+//                    AgreementEntity agreementEntity = agreements.next();
+//                    if (agreementEntity.getNumber().equals(agreement.getNumber())) {
+//                        throw new IllegalArgumentException(" Параметр Number \"№ Дополнительного соглашения (сделки)\" = \""+agreement.getNumber()+"\" уже существует для ЭП с ИД "+productId);
+//                    }
+//                }
 //                Шаг 8.
 //•	Добавить строку в таблицу ДС (agreement)
 //•	заполнить соотв. поля ДС согласно составу Request.Body, см. массив Arrangement[…]
@@ -167,7 +179,9 @@ public class CsiService implements CsiServiceIntf {
 
                 // Добавляем новое доп.соглашение
                 AgreementEntity agreementsEntity = new AgreementEntity(agreement.getNumber());
-                productEntity.addAgreement(agreementsEntity);
+                agreementsEntity.setProductId(productEntity);
+                //productEntity.addAgreement(agreementsEntity);
+                //AgreementEntity agreementsEntity = new AgreementEntity();
                 agreementsRepo.save(agreementsEntity);
                 // Созданные доп.соглашения добавляем в ответ
                 csiResponse.getData().getSupplementaryAgreementId().add(agreementsEntity.getId());

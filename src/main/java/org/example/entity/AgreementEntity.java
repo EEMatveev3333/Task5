@@ -121,9 +121,9 @@ public class AgreementEntity {
     @Column(name = "maximal_interest_rate_coefficient_action")
     private String maximalInterestRateCoefficientAction;
 
-//    public AgreementEntity(String number) {
-//        this.number = number;
-//    }
+    public AgreementEntity(String number) {
+        this.number = number;
+    }
 }
 
 

@@ -22,9 +22,9 @@ import java.util.List;
 @Service
 public class CreateAccountService implements CreateAccountServiceIntf {
 
-    private TppProductRegisterRepo registerRepo;
-    private TppProductRepo productRepo;
-    private TppRefProductRegisterTypeRepo registerTypeRepo;
+    private TppProductRegisterRepo tppProductRegisterRepo;
+    private TppProductRepo tppProductRepo;
+    private TppRefProductRegisterTypeRepo tppRefProductRegisterTypeRepo;
     private AccountNumServiceIntf accountNumService;
 
 
@@ -49,17 +49,26 @@ public class CreateAccountService implements CreateAccountServiceIntf {
         //•	Перейти на Шаг 3.
 
         // Ищем экземпляр продукта по переданному Id
-        if (productRepo.existsById(accountRequest.getInstanceId()))
-            productId = productRepo.getReferenceById(accountRequest.getInstanceId());
+
+        if (tppProductRepo.existsById(accountRequest.getInstanceId())) {
+            productId = tppProductRepo.getReferenceById(accountRequest.getInstanceId());
+
+
+        }
         else
             throw new NoResultException("По instanceId \"Идентификатор ЭП\" <"+accountRequest.getInstanceId()+"> не найден экземпляр продукта.");
 
         // Проверяем на дубли
-        TppRefProductRegisterTypeEntity registerTypeEntity = registerTypeRepo.getByValue(accountRequest.getRegistryTypeCode());
+        TppRefProductRegisterTypeEntity registerTypeEntity = tppRefProductRegisterTypeRepo.getByValue(accountRequest.getRegistryTypeCode());
         //if (registerRepo.existsByProductIdAndRegisterType(productId, registerTypeEntity.getRegisterTypeName())) {
-        if (registerRepo.existsByProductIdAndRegisterType(productId, registerTypeEntity)) {
+        if (tppProductRegisterRepo.existsByProductIdAndRegisterType(productId, registerTypeEntity)) {
             throw new IllegalArgumentException("Параметр registryTypeCode \"Тип регистра\" <"+accountRequest.getRegistryTypeCode()+"> уже существует для ЭП с ИД <"+accountRequest.getInstanceId()+">.");
         }
+
+//        else
+//
+
+
 ////////////////
 
         //        Шаг 3.
@@ -72,7 +81,7 @@ public class CreateAccountService implements CreateAccountServiceIntf {
 
         // Определяем тип регистра
         //List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByProductClassCodeAndValue(productId.getProductCodeId().getValue(), accountRequest.getRegistryTypeCode());
-        List<TppRefProductRegisterTypeEntity> registerTypes = registerTypeRepo.findAllByValue(accountRequest.getRegistryTypeCode());
+        List<TppRefProductRegisterTypeEntity> registerTypes = tppRefProductRegisterTypeRepo.findAllByValue(accountRequest.getRegistryTypeCode());
 
         if (registerTypes.isEmpty()) {
             throw new NoResultException("Код Продукта <"+productId.getProductCodeId()+"> не найдено в Каталоге продуктов для данного типа Регистра \""+accountRequest.getRegistryTypeCode()+"\"");
@@ -96,7 +105,7 @@ public class CreateAccountService implements CreateAccountServiceIntf {
         // Создаём ПР
         TppProductRegisterEntity accountEntity = new TppProductRegisterEntity(productId, registerTypeEntity, account, accountRequest.getCurrencyCode());
 
-        registerRepo.save(accountEntity);
+        tppProductRegisterRepo.save(accountEntity);
 
         accountResponse.getData().setAccountId(accountEntity.getId().toString());
 
@@ -105,15 +114,15 @@ public class CreateAccountService implements CreateAccountServiceIntf {
 
     @Autowired
     public void setRegisterRepo(TppProductRegisterRepo registerRepo) {
-        this.registerRepo = registerRepo;
+        this.tppProductRegisterRepo = registerRepo;
     }
     @Autowired
     public void setProductRepo(TppProductRepo productRepo) {
-        this.productRepo = productRepo;
+        this.tppProductRepo = productRepo;
     }
     @Autowired
     public void setRegisterTypeRepo(TppRefProductRegisterTypeRepo registerTypeRepo) {
-        this.registerTypeRepo = registerTypeRepo;
+        this.tppRefProductRegisterTypeRepo = registerTypeRepo;
     }
     @Autowired
     public void setAccountNumService(AccountNumServiceIntf accountNumService) {

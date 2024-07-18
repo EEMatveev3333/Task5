@@ -45,7 +45,7 @@ public class AccountPoolEntity {
     private String priorityCode;
 
     @Basic
-    @Column(name = "register_type_code")
+    @Column(name = "registry_type_code")
     private String registerTypeCode;
 
     //!!!Перепроверить

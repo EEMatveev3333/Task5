@@ -180,6 +180,7 @@ public class CsiService implements CsiServiceIntf {
                 // Добавляем новое доп.соглашение
                 AgreementEntity agreementsEntity = new AgreementEntity(agreement.getNumber());
                 agreementsEntity.setProductId(productEntity);
+                agreementsEntity.setSupplementaryAgreementId(Integer.toString(agreement.getSupplementaryAgreementId()));
                 //productEntity.addAgreement(agreementsEntity);
                 //AgreementEntity agreementsEntity = new AgreementEntity();
                 agreementsRepo.save(agreementsEntity);

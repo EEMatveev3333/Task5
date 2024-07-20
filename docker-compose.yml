@@ -1,0 +1,77 @@
+
+version: '3.8'
+
+services:
+
+  client-backend:
+    container_name: client-back-1
+    image: client:0.0.1
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8181:8181"
+    depends_on:
+      - service-db
+    environment:
+      - SERVER_PORT= 8181
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://service-db/postgres
+
+  service-db:
+    container_name: service-db-1
+    image: postgres:latest
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: root
+    volumes:
+      - ./infrastructure/db/create_db.sql:/docker-entrypoint-initdb.d/create_db.sql
+      - db-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  pgadmin:
+    container_name: pgadmin4_container_1
+    image: dpage/pgadmin4:7
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@admin.com
+      PGADMIN_DEFAULT_PASSWORD: root
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+#  cloudbeaver:
+#    image: dbeaver/cloudbeaver-ee:latest
+#    container_name: dbeaver
+#    restart: always
+#    ports:
+#      - "6060:60"
+##      - '$APP_HTTP_PORT:8978'
+#    volumes:
+#      - cloudbeaver:/opt/cloudbeaver/workspace
+
+#  cloudbeaver:
+#    restart: unless-stopped
+#    hostname: cloudbeaver
+#    image: dbeaver/cloudbeaver-ee:latest
+#    volumes:
+#      - cloudbeaver:/opt/cloudbeaver/workspace
+#    expose:
+#      - 8978
+#    networks:
+#      - cloudbeaver-private-net
+
+#networks:
+#  default:
+#    name: ${APP_NETWORK}
+#    external: true
+
+#networks:
+#  cloudbeaver-private-net:
+
+volumes:
+  db-data:
+  pgadmin-data:
+#  cloudbeaver:

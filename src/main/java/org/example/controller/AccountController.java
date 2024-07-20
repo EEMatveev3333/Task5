@@ -7,6 +7,7 @@ import org.example.services.interfaces.CreateAccountServiceIntf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,10 +18,14 @@ import java.io.StringWriter;
 
 import static org.example.utils.JsonUtil.validateAndParseJson;
 
+
 @RestController
+@Component
 public class AccountController {
 
-    private CreateAccountServiceIntf accountService;
+    //private CreateAccountServiceIntf accountService;
+    @Autowired
+    public CreateAccountServiceIntf accountService;
     //Метод POST corporate-settlement-account/create предназначен для создания нового объекта ПРОДУКТОВЫЙ РЕГИСТР (ПР)
     @PostMapping("corporate-settlement-account/create/")
     public ResponseEntity<CreateAccountResponse> createAccount(@RequestBody String requestJsonStr) {

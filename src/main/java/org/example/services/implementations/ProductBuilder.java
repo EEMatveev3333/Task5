@@ -23,7 +23,7 @@ public class ProductBuilder {
        // pe.setClientId(clientRepo.getByMdmCode(csiRequest.getMdmCode()));
         pe.setType(ProductType.valueOf(csiRequest.getProductType()));
         pe.setNumber(csiRequest.getContractNumber());
-        pe.setPriority(csiRequest.getPriority());
+        pe.setPriority(Integer.valueOf(csiRequest.getPriority()));
         pe.setDateOfConclusion(csiRequest.getContractDate());
         pe.setStartDateTime(new Date());
         pe.setPenaltyRate(BigDecimal.valueOf(csiRequest.getInterestRatePenalty()));

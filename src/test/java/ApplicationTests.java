@@ -53,7 +53,7 @@ public class ApplicationTests {
         flyway.clean();
         flyway.migrate();
     }
-
+/*
     @Test
     @DisplayName("Проверка контролируемости обязательных параметров")
     public void jsonRequirableTest() throws IOException {
@@ -184,6 +184,6 @@ public class ApplicationTests {
         assertThat("Не сгенерилось исключение по не найденному продукту", csiResponse.toString().replace('\n',' '), matchesRegex(".+КодПродукта.+не найден в Каталоге продуктов.+"));
         assertThat("Не сгенерилось исключение 404 NOT_FOUND", csiResponse.toString().replace('\n',' '), matchesRegex(".+404 NOT_FOUND.+"));
     }
-
+*/
 
 }

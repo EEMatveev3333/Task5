@@ -4,8 +4,10 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
+import org.antlr.v4.runtime.misc.NotNull;
 import org.example.utils.JsonUtil;
-
+//import jakarta.validation.Valid;
+//import jakarta.validation.constraints.NotNull;
 //import static org.example.utils.JsonUtil.getJsonSchema;
 
 import java.util.Date;
@@ -18,7 +20,7 @@ public class CreateCsiRequest {
     //private static final com.networknt.schema.JsonSchema jsonSchema = getJsonSchema(CreateCsiRequest.class);
 
     private Integer instanceId;
-
+    //@NotNull(message = "Имя обязательного параметра <productType> должно быть заполнено")
     private String productType;
 
     private String productCode;
@@ -31,7 +33,7 @@ public class CreateCsiRequest {
 
     private Date contractDate;
 
-    private Integer priority;
+    private String priority;
 
     private Double interestRatePenalty;
 
@@ -53,15 +55,15 @@ public class CreateCsiRequest {
 
     private String branchCode;
 
-    private Agreement[] instanceAgreement;
+    private InstanceArrangement[] instanceAgreement;
 
     private AdditionalPropertiesVip additionalPropertiesVip;
 
     @NoArgsConstructor
     @ToString
     @Getter @Setter
-    public static class Agreement {
-
+    //public static class Agreement {
+    public static class InstanceArrangement {
         private Integer supplementaryAgreementId;
 
         private String number;
@@ -71,11 +73,11 @@ public class CreateCsiRequest {
     @ToString
     @Getter @Setter
     public static class AdditionalPropertiesVip {
-
         private Data[] data;
     }
 
     @NoArgsConstructor
+    @ToString
     @Getter @Setter
     public static class Data {
         private String key;

@@ -112,7 +112,7 @@ public class CsiService implements CsiServiceIntf {
                 // Получаем номер счёта
                 //String accountNum = accountNumService.getAccountNum(csiRequest.getBranchCode(), csiRequest.getIsoCurrencyCode(), csiRequest.getMdmCode(), registerType);
                 //TppProductRegisterEntity prEntity = new TppProductRegisterEntity(productEntity.getProductCodeId(), registerType.getValue(), accountNum, csiRequest.getIsoCurrencyCode());
-                AccountEntity account = accountNumService.getAccount(csiRequest.getBranchCode(), csiRequest.getIsoCurrencyCode(), csiRequest.getMdmCode(), Integer.toString(csiRequest.getPriority()), registerType);
+                AccountEntity account = accountNumService.getAccount(csiRequest.getBranchCode(), csiRequest.getIsoCurrencyCode(), csiRequest.getMdmCode(), csiRequest.getPriority(), registerType);
                 TppProductRegisterEntity prEntity = new TppProductRegisterEntity(productEntity, registerType, account, csiRequest.getIsoCurrencyCode());
 
                 registerRepo.save(prEntity);
@@ -160,7 +160,7 @@ public class CsiService implements CsiServiceIntf {
 //                        throw new IllegalArgumentException(" Параметр Number \"№ Дополнительного соглашения (сделки)\" = \""+agreement.getNumber()+"\" уже существует для ЭП с ИД "+productId);
 //                    }
 //                }
-            for (CreateCsiRequest.Agreement agreement: csiRequest.getInstanceAgreement()) {
+            for (CreateCsiRequest.InstanceArrangement agreement: csiRequest.getInstanceAgreement()) {
                 List<AgreementEntity> lstAgreementEntity = agreementsRepo.findAllByProductIdAndNumber(productEntity,agreement.getNumber());
                 if (!lstAgreementEntity.isEmpty()) {
                         throw new IllegalArgumentException(" Параметр Number \"№ Дополнительного соглашения (сделки)\" = \""+agreement.getNumber()+"\" уже существует для ЭП с ИД "+productId);

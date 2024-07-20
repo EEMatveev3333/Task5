@@ -1,19 +1,29 @@
 package org.example.request;
 
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import org.example.utils.JsonUtil;
+import org.springframework.stereotype.Component;
 
+@Data
 @Getter
 @Setter
+//@EqualsAndHashCode(exclude = { "id" })
+@EqualsAndHashCode
+@AllArgsConstructor
+@NoArgsConstructor
+@ToString
 public class CreateAccountRequest {
     private static final com.networknt.schema.JsonSchema jsonSchema = JsonUtil.getJsonSchema(CreateAccountRequest.class);
 
     //Идентификатор ЭП, к которому привязывается продуктовый регистр
+    @Getter
+    @Setter
     private Integer instanceId;
 
     // Тип создаваемого продуктового регистра
+    @Getter
+    @Setter
     private String registryTypeCode;
 
     // Клиентский или внутрибанковский

@@ -8,6 +8,7 @@ import org.example.services.interfaces.CsiServiceIntf;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,10 +19,12 @@ import java.io.StringWriter;
 
 import static org.example.utils.JsonUtil.validateAndParseJson;
 
+
 @RestController
+@Component
 public class CsiController {
 
-    private CsiServiceIntf csiService;
+    public CsiServiceIntf csiService;
 
 
     @PostMapping("corporate-settlement-instance/create/")

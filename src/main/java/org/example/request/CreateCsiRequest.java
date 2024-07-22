@@ -75,6 +75,7 @@ public class CreateCsiRequest {
         private String arrangementType;
         //@JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
         private Integer shedulerJobId;
+        //private Long shedulerJobId;
         //@NotNull
         //@JsonFormat(shape = JsonFormat.Shape.NUMBER)
         //private String number;
@@ -87,6 +88,7 @@ public class CreateCsiRequest {
         private Date cancelDate;
         //@JsonFormat(shape = JsonFormat.Shape.NUMBER_INT)
         private Integer validityDuration;
+        //private Long validityDuration;
         private String cancellationReason;
         private String status;
         //@DateTimeFormat(iso = DateTimeFormat.ISO.DATE)

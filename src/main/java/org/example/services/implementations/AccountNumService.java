@@ -55,21 +55,28 @@ public class AccountNumService implements AccountNumServiceIntf {
 //    }
 
     public AccountEntity getAccount(String branchCode, String currencyCode, String mdmCode, String priorityCode, TppRefProductRegisterTypeEntity registerType) {
-        AccountPoolEntity accountPool = accountPoolRepo.getByBranchCodeAndCurrencyCodeAndMdmCodeAndPriorityCodeAndRegisterTypeCode(
+//        AccountPoolEntity accountPool = accountPoolRepo.getByBranchCodeAndCurrencyCodeAndMdmCodeAndPriorityCodeAndRegisterTypeCode(
+//                branchCode,
+//                currencyCode,
+//                mdmCode,
+//                priorityCode,
+//                registerType.getValue()
+//        );
+
+        AccountPoolEntity accountPool = accountPoolRepo.getByBranchCodeAndCurrencyCodeAndMdmCodeAndRegisterTypeCode(
                 branchCode,
                 currencyCode,
                 mdmCode,
-                priorityCode,
+//                priorityCode,
                 registerType.getValue()
         );
-
 
         if (accountPool == null) {
             throw new NoResultException("По переданным параметрам " +
                     "branchCode =\""+branchCode+"\" " +
                     "currencyCode =\""+currencyCode+"\" " +
                     "mdmCode =\""+mdmCode+"\" " +
-                    "priorityCode =\""+priorityCode+"\" " +
+//                    "priorityCode =\""+priorityCode+"\" " +
                     "registerType.getValue() =\""+registerType.getValue()+"\" " +
                     " не найден пул счетов");
         }

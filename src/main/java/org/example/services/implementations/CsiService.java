@@ -12,6 +12,8 @@ import org.springframework.stereotype.Service;
 
 import jakarta.persistence.NoResultException;
 import jakarta.transaction.Transactional;
+
+import java.math.BigDecimal;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
@@ -181,6 +183,34 @@ public class CsiService implements CsiServiceIntf {
                 AgreementEntity agreementsEntity = new AgreementEntity(agreement.getNumber());
                 agreementsEntity.setProductId(productEntity);
                 agreementsEntity.setSupplementaryAgreementId(Integer.toString(agreement.getSupplementaryAgreementId()));
+
+                //agreementsEntity.setProductId(productId);
+                agreementsEntity.setGeneralAgreementId(agreement.getGeneralAgreementId());
+                //agreementsEntity.setSupplementaryAgreementId(requestAgreement.getSupplementaryAgreementId());
+                //agreementsEntity.setArrangementType(ProductRegistryType.fromValue(agreement.getArrangementType()).name());
+                agreementsEntity.setArrangementType(agreement.getArrangementType());
+                agreementsEntity.setShedulerJobId((long) agreement.getShedulerJobId());
+                agreementsEntity.setNumber(agreement.getNumber());
+                agreementsEntity.setOpeningDate((agreement.getOpeningDate()));
+                agreementsEntity.setClosingDate((agreement.getClosingDate()));
+                agreementsEntity.setCancelDate((agreement.getCancelDate()));
+                agreementsEntity.setValidityDuration((long) agreement.getValidityDuration());
+                agreementsEntity.setCancellationReason(agreement.getCancellationReason());
+                //agreementsEntity.setStatus(ProductRegisterState.fromValue(agreement.getStatus()).name());
+                agreementsEntity.setStatus(agreement.getStatus());
+                agreementsEntity.setInterestCalculationDate((agreement.getInterestCalculationDate()));
+                agreementsEntity.setInterestRate(BigDecimal.valueOf(agreement.getInterestRate()));
+                agreementsEntity.setCoefficient(BigDecimal.valueOf(agreement.getCoefficient()));
+                agreementsEntity.setCoefficientAction(agreement.getCoefficientAction());
+                agreementsEntity.setMinimumInterestRate(BigDecimal.valueOf(agreement.getMinimumInterestRate()));
+                agreementsEntity.setMinimumInterestRateCoefficient(BigDecimal.valueOf(agreement.getMinimumInterestRateCoefficient()));
+                agreementsEntity.setMinimumInterestRateCoefficientAction(agreement.getMinimumInterestRateCoefficientAction());
+                agreementsEntity.setMaximalInterestRate(BigDecimal.valueOf(agreement.getMaximalnterestRate()));
+                agreementsEntity.setMaximalInterestRateCoefficient(BigDecimal.valueOf(agreement.getMaximalnterestRateCoefficient()));
+                agreementsEntity.setMaximalInterestRateCoefficientAction(agreement.getMaximalnterestRateCoefficientAction());
+
+
+
                 //productEntity.addAgreement(agreementsEntity);
                 //AgreementEntity agreementsEntity = new AgreementEntity();
                 agreementsRepo.save(agreementsEntity);

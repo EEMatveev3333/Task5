@@ -64,6 +64,16 @@ public class AccountNumService implements AccountNumServiceIntf {
         );
 
 
+        if (accountPool == null) {
+            throw new NoResultException("По переданным параметрам " +
+                    "branchCode =\""+branchCode+"\" " +
+                    "currencyCode =\""+currencyCode+"\" " +
+                    "mdmCode =\""+mdmCode+"\" " +
+                    "priorityCode =\""+priorityCode+"\" " +
+                    "registerType.getValue() =\""+registerType.getValue()+"\" " +
+                    " не найден пул счетов");
+        }
+
 //        if (accountPool.getAccounts().isEmpty()) {
 //            throw new NoResultException("В пуле счетов закончились счета");
 //        }

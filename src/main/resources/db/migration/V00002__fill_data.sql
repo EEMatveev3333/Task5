@@ -51,3 +51,8 @@ INSERT INTO account(account_pool_id, account_number, bussy)
 SELECT id, '4534352543276345', false
 FROM account_pool
 WHERE registry_type_code = '02.001.005_45343_CoDowFF';
+
+
+--INSERT INTO tpp_product
+--(id)
+--VALUES(nextval('tpp_product_id_seq'::regclass));

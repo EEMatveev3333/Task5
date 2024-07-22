@@ -9,4 +9,5 @@ import org.example.entity.TppProductEntity;
 @Repository
 public interface TppProductRepo extends JpaRepository<TppProductEntity, Integer> {
     TppProductEntity getByNumber(String number);
+    boolean existsById(Integer id);
 }
